@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<script>
+	<using xmlTag = "mongo-table" module="com.alogic.xscript.mongodb.MongoTable"/>
+	
+	<checkAndSet id="htable" dft="aaabbb"/>
+
+	
+	<mongo-table uri="mongodb://10.19.156.250:27017" table="zytest" db="mydb">
+		<mongo-insert many="false" doc="{ &quot;a &quot;: &quot;aa &quot;, &quot;b &quot;: &quot;bb &quot;}"></mongo-insert>
+	</mongo-table>
+	
+	
+	
+	
+</script>
