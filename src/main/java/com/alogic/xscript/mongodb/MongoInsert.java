@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.BsonArray;
-import org.bson.BsonDocument;
 import org.bson.Document;
 
 import com.alogic.xscript.ExecuteWatcher;

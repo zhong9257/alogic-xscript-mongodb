@@ -78,8 +78,8 @@ public class FirstMongo {
 			MongoDatabase database = mongoClient.getDatabase("mydb");
 
 			// 三、获得集合
-			MongoCollection<Document> collection = database.getCollection("test2");
-			System.out.printf("collection %s length is %d", "test2", collection.count());
+			MongoCollection<Document> collection = database.getCollection("zytest");
+			System.out.printf("collection %s length is %d", "test2", collection.count(eq("a","aa")));
 			System.out.println();
 
 			// 例子2 带条件的count
@@ -131,6 +131,8 @@ public class FirstMongo {
 	}
 
 	public static void main(String[] args) {
-
+		FirstMongo f=new FirstMongo();
+		f.count();
+		f.mongoClient.close();
 	}
 }

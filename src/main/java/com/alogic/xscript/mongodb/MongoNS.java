@@ -11,6 +11,7 @@ public class MongoNS extends Segment {
 		registerModule("mongo-conf",MongoConf.class);
 		registerModule("mongo-table",MongoTable.class);
 		registerModule("mongo-insert",MongoInsert.class);
+		registerModule("mongo-delete",MongoDelete.class);
 	}
 
 }
