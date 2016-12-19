@@ -42,7 +42,8 @@ public class DemoFind {
 		//run("java:///xscript/list.xml#Demo",settings);
 		//run("java:///xscript/MongoDelete.xml#Demo",settings);
 		//run("java:///xscript/set.xml#Demo",settings);
-		run("java:///xscript/MongoFind.xml#DemoFind",settings);
+		//run("java:///xscript/MgQuery.xml#DemoFind",settings);
+		run("java:///xscript/MgTextSearch.xml#DemoFind",settings);
 		
 	}
 

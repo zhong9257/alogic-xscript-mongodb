@@ -28,7 +28,7 @@ import static com.mongodb.client.model.Projections.*;
  * @author cenwan
  *
  */
-public class MongoFind extends MongoTableOperation{
+public class MgQuery extends MongoTableOperation{
 	
 	private Properties filterProperties;
 	
@@ -42,7 +42,7 @@ public class MongoFind extends MongoTableOperation{
     protected FilterBuilder fb = null;
     protected Bson filter = null;
 
-	public MongoFind(String tag, Logiclet p) {
+	public MgQuery(String tag, Logiclet p) {
 		super(tag, p);
 	}
 	
