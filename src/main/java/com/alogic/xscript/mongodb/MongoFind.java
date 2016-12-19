@@ -89,8 +89,12 @@ public class MongoFind extends MongoTableOperation{
     			
             	Map<String, Object> map = new LinkedHashMap<>();
 				for(String s :doc.keySet()){
-					if(s.equals("_id")){
-						map.put(s,doc.getObjectId("_id").toString());
+					if(s.equals("_id" )){
+						if((doc.get(s) instanceof ObjectId)){
+							map.put(s,doc.getObjectId("_id").toString());
+						} else {
+							map.put(s,doc.get(s));
+						}
 					} else {
 						map.put(s,doc.get(s));
 					}
