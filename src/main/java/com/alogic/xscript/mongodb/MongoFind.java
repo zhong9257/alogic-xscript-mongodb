@@ -22,15 +22,23 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Sorts;
-
+import static com.mongodb.client.model.Projections.*;
+/**
+ * 文档查找
+ * @author cenwan
+ *
+ */
 public class MongoFind extends MongoTableOperation{
 	
 	private Properties filterProperties;
 	
 	protected String tag="";
 	protected String first="";//first为true时，只返回最先匹配到的一个文档；其他情况返回多个文档
-	protected String limit="";//返回指定数量的文档，只有first为false时有效
 	protected String sort = "";//对指定字段进行排序，可以有多个字段,用逗号隔开，升序字段放到分号前面，降序字段放分号后面.mongodb是先排序后limit
+	protected String skip="";//跳过指定数量的文档
+	protected String limit="";//返回指定数量的文档，只有first为false时有效
+	protected String projection="";//返回指定字段
+	
     protected FilterBuilder fb = null;
     protected Bson filter = null;
 
@@ -43,8 +51,10 @@ public class MongoFind extends MongoTableOperation{
 		super.configure(p);
 		tag = PropertiesConstants.getRaw(p, "tag", "");
 		first = PropertiesConstants.getRaw(p, "first", "");
-		limit = PropertiesConstants.getRaw(p, "limit", "");
 		sort = PropertiesConstants.getRaw(p, "sort", "");
+		skip = PropertiesConstants.getRaw(p, "skip", "");
+		limit = PropertiesConstants.getRaw(p, "limit", "");
+		projection = PropertiesConstants.getRaw(p, "projection", "");
 	}
 	
 	@Override
@@ -67,7 +77,7 @@ public class MongoFind extends MongoTableOperation{
 	@Override
 	protected void onExecute(MongoCollection<Document> collection, Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
-            int index = sort.indexOf(';');
+            
             if(getBoolean(first, false)){//first为true的时候，只返回最先匹配到的一个文档
             	Document doc = null;
     			if(fb!=null){
@@ -76,6 +86,7 @@ public class MongoFind extends MongoTableOperation{
     			} else {
     				doc = collection.find().first();
     			}
+    			
             	Map<String, Object> map = new LinkedHashMap<>();
 				for(String s :doc.keySet()){
 					if(s.equals("_id")){
@@ -88,14 +99,20 @@ public class MongoFind extends MongoTableOperation{
 				
             } else {//返回多个匹配的文档
             	FindIterable<Document> iter = null;
-            	if(fb!=null){//1.根据指定段匹配文档
+            	if(fb!=null){//根据指定段匹配文档
     				filter=fb.getFilter(filterProperties, ctx);
     				iter = collection.find(filter);
     			} else {
     				iter = collection.find();
     			}
             	
-            	if(sort != null){//2.对指定字段排序
+            	if(sort != ""){//对指定字段排序
+            		/*
+            		 * 多字段传入
+            		 * 
+            		 * 
+            		 */
+            		int index = sort.indexOf(';');
             		if(index == 0){
             			iter = iter.sort(Sorts.descending(sort.substring(1,sort.length())));
             		} else if ((index + 1) == sort.length()){
@@ -105,8 +122,23 @@ public class MongoFind extends MongoTableOperation{
             		}
             	}
             	
-            	if(limit != null){//3.limit不为空时，返回 指定数量的个文档，limit为0或空 时都返回全部文档，其他情况返回|limit|数量的文档
+            	if(skip != null){
+            		iter = iter.skip(getInt(skip,0));
+            	}
+            	
+            	if(limit != null){//limit不为空时，返回 指定数量的个文档，limit为0或空 时都返回全部文档，其他情况返回|limit|数量的文档
             		iter = iter.limit(getInt(limit,0));
+            	}
+            	
+            	if(projection != ""){
+            		/*
+            		 * 多字段传入
+            		 * 
+            		 * 
+            		 */
+            		//Object str = "\"name\",\"_id\"";
+            		//System.out.println(projection);
+            		iter = iter.projection(fields(include(projection)));
             	}
             	
     			MongoCursor<Document> cursor = iter.iterator();

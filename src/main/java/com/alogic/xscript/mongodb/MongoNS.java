@@ -13,6 +13,7 @@ public class MongoNS extends Segment {
 		registerModule("mongo-insert",MongoInsert.class);
 		registerModule("mongo-delete",MongoDelete.class);
 		registerModule("mongo-find",MongoFind.class);
+		registerModule("mongo-textsearch",MongoFind.class);
 	}
 
 }

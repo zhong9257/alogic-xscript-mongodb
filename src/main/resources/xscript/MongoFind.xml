@@ -6,9 +6,9 @@
 	<!-- <mongo-table uri="mongodb://10.19.156.250:27017" table="find" db="war3"> -->
 	<mongo-table uri="mongodb://127.0.0.1:27017" table="stores" db="test" >
 	
-		<mongo-find tag="data" first="false" limit="4" sort="_id;">
+		<mongo-find tag="data" first="false" sort="name;_id" limit="4" skip="1" projection="name" >
 			
-				<!-- <filter module="Eq" field="a" value="chaos"></filter> -->
+				<filter module="Eq" field="name" value="Burger Buns"></filter>
 				
 			
 		</mongo-find>
