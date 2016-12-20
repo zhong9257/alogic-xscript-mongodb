@@ -20,7 +20,7 @@ import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 
 /**
- * 文本搜索
+ * 文本搜索 version 1.0
  * @author cenwan
  *
  */

@@ -3,9 +3,9 @@
 	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
-			<mg-table table="stores" >
-				<mg-textsearch tagValue="data" keywords="Shopping Java" textscore="true" limit="2" offset="1">
-				</mg-textsearch>
+			<mg-table table="sphere" >
+				<mg-2dspherequery tagValue="data" mode="inCircle" field="loc,0,0,10">
+				</mg-2dspherequery>
 			</mg-table>
 		</mg-db>
 	</mg-cli>

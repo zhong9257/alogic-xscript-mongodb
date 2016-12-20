@@ -4,8 +4,9 @@
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-textsearch tagValue="data" keywords="Shopping Java" textscore="true" limit="2" offset="1">
-				</mg-textsearch>
+				<mg-count tagValue="count">
+					<filter module="Eq" field="name" value="Burger Buns"></filter>
+				</mg-count>
 			</mg-table>
 		</mg-db>
 	</mg-cli>

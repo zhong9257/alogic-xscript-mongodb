@@ -43,8 +43,10 @@ public class DemoFind {
 		//run("java:///xscript/MongoDelete.xml#Demo",settings);
 		//run("java:///xscript/set.xml#Demo",settings);
 		//run("java:///xscript/MgQuery.xml#DemoFind",settings);
-		run("java:///xscript/MgTextSearch.xml#DemoFind",settings);
+		//run("java:///xscript/MgTextSearch.xml#DemoFind",settings);
 		//run("java:///xscript/MgInsert.xml#DemoFind",settings);
+		//run("java:///xscript/MgCount.xml#DemoFind",settings);
+		run("java:///xscript/Mg2dsphereQuery.xml#DemoFind",settings);
 		
 	}
 

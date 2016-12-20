@@ -2,7 +2,8 @@
 <naming>
 	<context module="com.alogic.pool.context.Inner">
 		<pool id="globalMongoDBClientPool" module="com.alogic.xscript.mongodb.connection.GlobalMongoDBClientFactory">
-			<uri>10.19.156.250:27017</uri>
+			<!-- <uri>10.19.156.250:27017</uri> -->
+			<uri>127.0.0.1:27017</uri>
 			<mongoCredentials>
 				<mongoCredential ></mongoCredential>
 			</mongoCredentials>
