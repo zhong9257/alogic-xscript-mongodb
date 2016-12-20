@@ -14,12 +14,13 @@ import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 import com.mongodb.client.MongoCollection;
 
-public class MongoInsert extends MongoTableOperation{
+public class MgInsert extends MgTableOperation{
 	
 	protected String doc="";
 	protected String many="false";
+	protected String tagValue="";
 
-	public MongoInsert(String tag, Logiclet p) {
+	public MgInsert(String tag, Logiclet p) {
 		super(tag, p);
 	}
 	
@@ -29,6 +30,8 @@ public class MongoInsert extends MongoTableOperation{
 		super.configure(p);
 		doc = PropertiesConstants.getRaw(p, "doc", "");
 		many = PropertiesConstants.getRaw(p, "many", "");
+		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
+		
 	}
 
 
@@ -37,14 +40,17 @@ public class MongoInsert extends MongoTableOperation{
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
 		
 		if(getBoolean(many, false)){
-			BsonArray bsonArray= BsonArray.parse(ctx.transform(many));
+			BsonArray bsonArray= BsonArray.parse(ctx.transform(doc));
 			List<Document> docs = new ArrayList<Document>();
 			for (int i = 0; i < bsonArray.size(); i++) {
 				docs.add(Document.parse(bsonArray.get(i).asDocument().toJson()));
 			}
 			collection.insertMany(docs);
-		}else{			
-			collection.insertOne(Document.parse(ctx.transform(doc)));
+			current.put(tagValue, docs);
+		}else{		
+			Document d = Document.parse(ctx.transform(doc));
+			collection.insertOne(d);
+			current.put(tagValue, d);
 		}
 		
 		log(String.format("insert doc[%s] success!", collection.getNamespace()), "info");

@@ -28,7 +28,7 @@ import static com.mongodb.client.model.Projections.*;
  * @author cenwan
  *
  */
-public class MgQuery extends MongoTableOperation{
+public class MgQuery extends MgTableOperation{
 	
 	private Properties filterProperties;
 	

@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
 <settings>
-	<parameter id="mongodb.master" value="java:///conf/mongodb.xml#App" />
-	<parameter id="mongo.uri0" value="192.168.137.151" final="true"/>
+	<parameter id="naming.master" value="java:///conf/mongo-pool.xml#Demo" />
 </settings>

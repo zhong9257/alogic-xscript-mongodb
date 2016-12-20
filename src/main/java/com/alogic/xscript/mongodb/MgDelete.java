@@ -16,9 +16,8 @@ import com.anysoft.util.XmlElementProperties;
 import com.anysoft.util.XmlTools;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
-import static com.mongodb.client.model.Filters.*;
 
-public class MongoDelete extends MongoTableOperation{
+public class MgDelete extends MgTableOperation{
     /**
      * Filter Builder
      */
@@ -30,7 +29,7 @@ public class MongoDelete extends MongoTableOperation{
 	
 
  
-	public MongoDelete(String tag, Logiclet p) {
+	public MgDelete(String tag, Logiclet p) {
 		super(tag, p);
 	}
 	
@@ -68,7 +67,7 @@ public class MongoDelete extends MongoTableOperation{
 		if(getBoolean(many, false)){
 			if(fb!=null){
 				filter=fb.getFilter(filterProperties, ctx);
-				result=collection.deleteMany(filter);
+				result=collection.deleteMany(filter);				
 			}else{
 				
 			}
@@ -80,8 +79,6 @@ public class MongoDelete extends MongoTableOperation{
 				
 			}
 		}
-		
-		Bson b=and(eq("a","aa"),eq("b","bb"));
 		
 		log(String.format("delete doc[%s] success!", collection.getNamespace()), "info");
 		

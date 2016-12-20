@@ -30,7 +30,7 @@ import static com.mongodb.client.model.Projections.*;
  * @author cenwan
  *
  */
-public class MgTextSearch extends MongoTableOperation{
+public class MgTextSearch extends MgTableOperation{
 	
 	protected String tag="";
 	protected String searchterm="";//按照匹配度排序

@@ -20,7 +20,7 @@ import com.anysoft.util.XmlTools;
 /**
  * Filter Builder
  * 
- * @author duanyy
+ * @author zhongyi
  *
  */
 public interface FilterBuilder extends XMLConfigurable,Configurable{
@@ -38,7 +38,7 @@ public interface FilterBuilder extends XMLConfigurable,Configurable{
 	/**
 	 * 虚基类
 	 * 
-	 * @author duanyy
+	 * @author zhongyi
 	 *
 	 */
 	public abstract static class Abstract implements FilterBuilder{
@@ -57,7 +57,7 @@ public interface FilterBuilder extends XMLConfigurable,Configurable{
 	/**
 	 * Filter列表实现
 	 * 
-	 * @author duanyy
+	 * @author zhongyi
 	 *
 	 */
 	public abstract static class Multi extends Abstract{
@@ -120,7 +120,7 @@ public interface FilterBuilder extends XMLConfigurable,Configurable{
 	/**
 	 * 工厂类
 	 * 
-	 * @author duanyy
+	 * @author zhongyi
 	 *
 	 */
 	public static class TheFactory extends Factory<FilterBuilder>{

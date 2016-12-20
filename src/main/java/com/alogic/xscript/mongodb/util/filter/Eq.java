@@ -8,6 +8,10 @@ import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 import com.mongodb.client.model.Filters;
 
+/**
+ * @author zhongyi
+ *
+ */
 public class Eq extends FilterBuilder.Abstract{
 	
 	protected String field="_id";

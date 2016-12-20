@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mongodb>
 	<context>
-		<schema id="demo" module="com.logicbus.redis.kvalue.RedisSchema">
-			<rcp id = "mongo0" mongoURI="${mongo.uri0}" defaultDB="" maxIdle="3" maxActive="10"/>
-		</schema>
+		<mongoDBClient id="mongoDB" module="">
+			<uri></uri>
+			<mongoCredentials>
+				<mongoCredential ></mongoCredential>
+			</mongoCredentials>
+			<mongoClientOptions></mongoClientOptions>
+		</mongoDBClient>
 	</context>
 </mongodb>
 

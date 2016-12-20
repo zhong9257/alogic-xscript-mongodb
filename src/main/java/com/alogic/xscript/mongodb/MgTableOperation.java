@@ -14,11 +14,11 @@ import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 import com.mongodb.client.MongoCollection;
 
-public abstract class MongoTableOperation extends AbstractLogiclet {
+public abstract class MgTableOperation extends AbstractLogiclet {
 	  /**
      * hadmin的cid
      */
-    private String pid = "$mongo-table";
+    private String pid = "$mg-table";
     /**
      * 数据集
      */
@@ -34,7 +34,7 @@ public abstract class MongoTableOperation extends AbstractLogiclet {
      */
     protected String id;
 
-    public MongoTableOperation(String tag, Logiclet p) {
+    public MgTableOperation(String tag, Logiclet p) {
         super(tag, p);
     }
 
@@ -51,7 +51,7 @@ public abstract class MongoTableOperation extends AbstractLogiclet {
     protected void onExecute(Map<String, Object> root, Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
     	MongoCollection<Document> collection = ctx.getObject(pid);
         if (collection == null) {
-            throw new BaseException("core.no_collection", "It must be in a mongo-table context,check your script.");
+            throw new BaseException("core.no_collection", "It must be in a mg-table context,check your script.");
         }
         if (StringUtils.isNotEmpty(id)) {
             onExecute(collection, root, current, ctx, watcher);
