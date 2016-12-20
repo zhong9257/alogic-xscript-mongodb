@@ -6,12 +6,12 @@ import com.alogic.xscript.plugins.Segment;
 public class MongoNS extends Segment {
 
 	public MongoNS(String tag, Logiclet p) {
-		
 		super(tag, p);
-		registerModule("mongo-conf",MongoConf.class);
-		registerModule("mongo-table",MongoTable.class);
-		registerModule("mongo-insert",MongoInsert.class);
-		registerModule("mongo-delete",MongoDelete.class);
+		registerModule("mg-cli",MgClient.class);
+		registerModule("mg-db",MgDB.class);
+		registerModule("mg-table",MongoTable.class);		
+		registerModule("mg-insert",MongoInsert.class);
+		registerModule("mg-delete",MongoDelete.class);
 	}
 
 }
