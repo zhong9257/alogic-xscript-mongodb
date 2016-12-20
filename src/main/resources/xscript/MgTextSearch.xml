@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <script>
-	<using xmlTag = "mongo-table" module="com.alogic.xscript.mongodb.MongoTable"/>
-	<checkAndSet id="htable" dft="aaabbb"/>
-	
-	<!-- <mongo-table uri="mongodb://10.19.156.250:27017" table="find" db="war3"> -->
-	<mongo-table uri="mongodb://127.0.0.1:27017" table="stores" db="test" >
-		<mongo-textsearch tag="data" searchterm="Shopping Java" textscore="true" limit="2" skip="1">
-		</mongo-textsearch>
-	</mongo-table>
+	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
+	<mg-cli cli="globalMongoDBClientPool">
+		<mg-db db="test">
+			<mg-table table="stores" >
+				<mg-textsearch tag="data" keywords="Shopping Java" textscore="true" limit="2" offset="1">
+				</mg-textsearch>
+			</mg-table>
+		</mg-db>
+	</mg-cli>
 </script> 
