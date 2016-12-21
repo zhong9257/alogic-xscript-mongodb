@@ -1,5 +1,6 @@
 package com.alogic.xscript.mongodb;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,8 +24,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Sorts;
 import static com.mongodb.client.model.Projections.*;
+
 /**
- * 文档查找
+ * 文档查找 version 1.0
  * @author cenwan
  *
  */
@@ -32,10 +34,10 @@ public class MgQuery extends MgTableOperation{
 	
 	private Properties filterProperties;
 	
-	protected String tag="";
+	protected String tagValue="";
 	protected String first="";//first为true时，只返回最先匹配到的一个文档；其他情况返回多个文档
 	protected String sort = "";//对指定字段进行排序，可以有多个字段,用逗号隔开，升序字段放到分号前面，降序字段放分号后面.mongodb是先排序后limit
-	protected String skip="";//跳过指定数量的文档
+	protected String offset="";//跳过指定数量的文档
 	protected String limit="";//返回指定数量的文档，只有first为false时有效
 	protected String projection="";//返回指定字段
 	
@@ -49,10 +51,10 @@ public class MgQuery extends MgTableOperation{
 	@Override
 	public void configure(Properties p) {
 		super.configure(p);
-		tag = PropertiesConstants.getRaw(p, "tag", "");
+		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
 		first = PropertiesConstants.getRaw(p, "first", "");
 		sort = PropertiesConstants.getRaw(p, "sort", "");
-		skip = PropertiesConstants.getRaw(p, "skip", "");
+		offset = PropertiesConstants.getRaw(p, "offset", "");
 		limit = PropertiesConstants.getRaw(p, "limit", "");
 		projection = PropertiesConstants.getRaw(p, "projection", "");
 	}
@@ -99,7 +101,7 @@ public class MgQuery extends MgTableOperation{
 						map.put(s,doc.get(s));
 					}
 				}	
-				current.put(tag,map);
+				current.put(tagValue,map);
 				
             } else {//返回多个匹配的文档
             	FindIterable<Document> iter = null;
@@ -111,23 +113,20 @@ public class MgQuery extends MgTableOperation{
     			}
             	
             	if(sort != ""){//对指定字段排序
-            		/*
-            		 * 多字段传入
-            		 * 
-            		 * 
-            		 */
             		int index = sort.indexOf(';');
+            		String descendPart = sort.substring(index + 1,sort.length());
+            		String ascendPart = sort.substring(0,index);
             		if(index == 0){
-            			iter = iter.sort(Sorts.descending(sort.substring(1,sort.length())));
+            			iter = iter.sort(Sorts.descending(stringToArray(descendPart)));
             		} else if ((index + 1) == sort.length()){
-            			iter = iter.sort(Sorts.ascending(sort.substring(0,index)));
+            			iter = iter.sort(Sorts.ascending(stringToArray(ascendPart)));
             		} else {
-            			iter = iter.sort(Sorts.orderBy(Sorts.ascending(sort.substring(0,index)), Sorts.descending(sort.substring(index + 1,sort.length()))));
+            			iter = iter.sort(Sorts.orderBy(Sorts.ascending(stringToArray(ascendPart)), Sorts.descending(stringToArray(descendPart))));
             		}
             	}
             	
-            	if(skip != null){
-            		iter = iter.skip(getInt(skip,0));
+            	if(offset != null){
+            		iter = iter.skip(getInt(offset,0));
             	}
             	
             	if(limit != null){//limit不为空时，返回 指定数量的个文档，limit为0或空 时都返回全部文档，其他情况返回|limit|数量的文档
@@ -135,14 +134,7 @@ public class MgQuery extends MgTableOperation{
             	}
             	
             	if(projection != ""){
-            		/*
-            		 * 多字段传入
-            		 * 
-            		 * 
-            		 */
-            		//Object str = "\"name\",\"_id\"";
-            		//System.out.println(projection);
-            		iter = iter.projection(fields(include(projection)));
+            		iter = iter.projection(fields(include(stringToArray(projection))));
             	}
             	
     			MongoCursor<Document> cursor = iter.iterator();
@@ -163,7 +155,30 @@ public class MgQuery extends MgTableOperation{
     				}	
     				list.add(map);
     			}
-    			current.put(tag,list);
+    			current.put(tagValue,list);
             }
+	}
+	
+	/**
+	 * 带多个字段的字符串转化为数组
+	 * @param src
+	 * @return List
+	 */
+	public static List<String> stringToArray(String src){
+		if(src != null){
+			List<String> list = new ArrayList<>();
+			int index = src.indexOf(',');
+			int len = 0;
+			while(index != (-1)){
+				len = src.length();
+				list.add(src.substring(0, index));
+				src = src.substring(index + 1, len);
+				index = src.indexOf(',');
+			}
+			list.add(src);
+			return list;
+		} else {
+			return null;
+		}
 	}
 }

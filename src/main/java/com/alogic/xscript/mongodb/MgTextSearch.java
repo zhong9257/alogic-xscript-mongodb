@@ -6,36 +6,30 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
-import org.w3c.dom.Element;
-
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
-import com.alogic.xscript.mongodb.util.FilterBuilder;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
-import com.anysoft.util.XmlElementProperties;
-import com.anysoft.util.XmlTools;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
-import static com.mongodb.client.model.Projections.*;
+
 /**
- * 文本搜索
+ * 文本搜索 version 1.0
  * @author cenwan
  *
  */
 public class MgTextSearch extends MgTableOperation{
 	
-	protected String tag="";
-	protected String searchterm="";//按照匹配度排序
+	protected String tagValue="";
+	protected String keywords="";//要匹配的字段，按照匹配度排序
 	protected String textscore = "";//是否返回searchterm的相关度分数
-	protected String skip="";//跳过指定个文档
+	protected String offset="";//跳过指定个文档
 	protected String limit="";//返回指定数量的文档
 
 	public MgTextSearch(String tag, Logiclet p) {
@@ -45,10 +39,10 @@ public class MgTextSearch extends MgTableOperation{
 	@Override
 	public void configure(Properties p) {
 		super.configure(p);
-		tag = PropertiesConstants.getRaw(p, "tag", "");
-		searchterm = PropertiesConstants.getRaw(p, "searchterm", "");
+		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
+		keywords = PropertiesConstants.getRaw(p, "keywords", "");
 		textscore = PropertiesConstants.getRaw(p, "textscore", "");
-		skip = PropertiesConstants.getRaw(p, "skip", "");
+		offset = PropertiesConstants.getRaw(p, "offset", "");
 		limit = PropertiesConstants.getRaw(p, "limit", "");
 	}
 	
@@ -57,8 +51,8 @@ public class MgTextSearch extends MgTableOperation{
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
             
         	FindIterable<Document> iter = null;
-        	if(searchterm != ""){
-        		iter = collection.find(Filters.text(searchterm));
+        	if(keywords != ""){
+        		iter = collection.find(Filters.text(keywords));
         	} else {
         		iter = collection.find();
         	}
@@ -68,8 +62,8 @@ public class MgTextSearch extends MgTableOperation{
             	iter = iter.sort(Sorts.metaTextScore("score"));
         	}
         	
-        	if(skip != null){
-        		iter = iter.skip(getInt(skip,0));
+        	if(offset != null){
+        		iter = iter.skip(getInt(offset,0));
         	}
         	
         	if(limit != null){//limit不为空时，返回 指定数量的个文档，limit为0或空 时都返回全部文档，其他情况返回|limit|数量的文档
@@ -94,6 +88,6 @@ public class MgTextSearch extends MgTableOperation{
 				}	
 				list.add(map);
 			}
-			current.put(tag,list);
+			current.put(tagValue,list);
 	}
 }
