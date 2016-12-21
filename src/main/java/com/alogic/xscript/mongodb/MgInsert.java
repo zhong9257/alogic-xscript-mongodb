@@ -1,55 +1,133 @@
 package com.alogic.xscript.mongodb;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.bson.BsonArray;
 import org.bson.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.mongodb.util.DocObjectIdConvertor;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
+import com.anysoft.util.XmlElementProperties;
+import com.anysoft.util.XmlTools;
+import com.jayway.jsonpath.spi.JsonProvider;
+import com.jayway.jsonpath.spi.JsonProviderFactory;
 import com.mongodb.client.MongoCollection;
 
+
+
+
+/**
+ * @author zhongyi
+ *
+ */
 public class MgInsert extends MgTableOperation{
 	
 	protected String doc="";
 	protected String many="false";
-	protected String tagValue="";
+	protected String idKey="_id";
+	protected String tagValue="$mg-insert";
+	
+	protected static JsonProvider provider = null;	
+	static {
+		provider = JsonProviderFactory.createProvider();
+	}
+	/**
+	 * 子节点
+	 */
+	protected List<Logiclet> children = new ArrayList<Logiclet>(); // NOSONAR
 
 	public MgInsert(String tag, Logiclet p) {
 		super(tag, p);
 	}
 	
 	
+	
 	@Override
-	public void configure(Properties p) {
-		super.configure(p);
-		doc = PropertiesConstants.getRaw(p, "doc", "");
-		many = PropertiesConstants.getRaw(p, "many", "");
-		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
+	public void configure(Element element, Properties props) {
 		
+		doc = PropertiesConstants.getRaw(props, "doc", "");
+		many = PropertiesConstants.getRaw(props, "many", many);
+		many = PropertiesConstants.getRaw(props, "idKey", idKey);
+		tagValue = PropertiesConstants.getRaw(props, "tagValue", tagValue);
+		
+		
+		if("".equals(doc)){
+			XmlElementProperties p = new XmlElementProperties(element, props);
+			
+			//约定子标签doc包含的标签是用来构建doc数据
+			Element docE = XmlTools.getFirstElementByPath(element, "doc");
+			NodeList nodeList = docE.getChildNodes();
+			
+			for (int i = 0 ; i < nodeList.getLength() ; i ++){
+				Node n = nodeList.item(i);
+				
+				if (n.getNodeType() != Node.ELEMENT_NODE){
+					//只处理Element节点
+					continue;
+				}
+				
+				Element e = (Element)n;
+				String xmlTag = e.getNodeName();		
+				Logiclet statement = createLogiclet(xmlTag, this);
+				
+				if (statement != null){
+					statement.configure(e, p);
+					children.add(statement);
+				}
+			}
+		}	
+		
+		configure(props);
 	}
 
 
 	@Override
 	protected void onExecute(MongoCollection<Document> collection, Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
+		String _doc=doc;
+		
+		Map<String,Object> jsonData = null;		
+		if("".equals(doc)){
+			jsonData = new HashMap<String,Object>();	
+			for (Logiclet child:children){
+				child.execute(jsonData, jsonData, ctx, watcher);
+			}
+			
+			//约定子标签构造的数据放到doc节点下
+			Object o=jsonData.get("doc");
+			doc=provider.toJson(o);
+						
+		}else{
+			doc=ctx.transform(doc);
+		}
+		
 		
 		if(getBoolean(many, false)){
-			BsonArray bsonArray= BsonArray.parse(ctx.transform(doc));
+			BsonArray bsonArray= BsonArray.parse(doc);
 			List<Document> docs = new ArrayList<Document>();
 			for (int i = 0; i < bsonArray.size(); i++) {
 				docs.add(Document.parse(bsonArray.get(i).asDocument().toJson()));
 			}
+			
+			
 			collection.insertMany(docs);
-			current.put(tagValue, docs);
+			DocObjectIdConvertor.convert(docs, idKey);
+			current.put(tagValue,docs );
+			
 		}else{		
-			Document d = Document.parse(ctx.transform(doc));
+			Document d = Document.parse(doc);
 			collection.insertOne(d);
+			DocObjectIdConvertor.convert(d, idKey);
 			current.put(tagValue, d);
 		}
 		

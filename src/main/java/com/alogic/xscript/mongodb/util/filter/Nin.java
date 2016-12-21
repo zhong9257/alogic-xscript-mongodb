@@ -13,16 +13,24 @@ import com.mongodb.client.model.Filters;
  * @author zhongyi
  *
  */
-public class Gt extends FilterBuilder.Abstract{
+public class Nin extends FilterBuilder.Abstract{
 	protected String field="_id";
-	protected String value="";//毫无规则的默认值，避免误操作
+	protected String value="";
 	protected String type="string";
 	protected String pattten="";
+	protected String delimeter=";";
 	
 
 	@Override
 	public Bson getFilter(Properties p,LogicletContext ctx){
-		return Filters.gt(field, ValueConvertor.convert(type, ctx.transform(value),null));
+		String afterTransValue=ctx.transform(value);
+		String[] items=afterTransValue.split(delimeter);
+		Object[] values=new Object[items.length];
+		for (int i = 0; i < items.length; i++) {
+			values[i]=ValueConvertor.convert(type, ctx.transform(items[i]),pattten);
+		}
+		
+		return Filters.nin(field, values);
 	}
 
 	@Override
@@ -31,5 +39,6 @@ public class Gt extends FilterBuilder.Abstract{
 		value = PropertiesConstants.getRaw(p, "value", value);
 		type = PropertiesConstants.getRaw(p, "type", type);
 		pattten = PropertiesConstants.getRaw(p, "pattten", pattten);
+		delimeter = PropertiesConstants.getRaw(p, "delimeter", delimeter);
 	}
 }

@@ -4,7 +4,6 @@ import org.bson.conversions.Bson;
 
 import com.alogic.xscript.LogicletContext;
 import com.alogic.xscript.mongodb.util.FilterBuilder;
-import com.alogic.xscript.mongodb.util.ValueConvertor;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 import com.mongodb.client.model.Filters;
@@ -13,23 +12,26 @@ import com.mongodb.client.model.Filters;
  * @author zhongyi
  *
  */
-public class Gt extends FilterBuilder.Abstract{
+public class Mod extends FilterBuilder.Abstract{
+	
 	protected String field="_id";
-	protected String value="";//毫无规则的默认值，避免误操作
-	protected String type="string";
-	protected String pattten="";
+	protected String remainder="";
+	protected String divisor="";
+
 	
 
 	@Override
 	public Bson getFilter(Properties p,LogicletContext ctx){
-		return Filters.gt(field, ValueConvertor.convert(type, ctx.transform(value),null));
+		remainder=ctx.transform(remainder);
+		divisor=ctx.transform(divisor);
+		return Filters.mod(field, Long.parseLong(divisor),Long.parseLong(remainder));
 	}
 
 	@Override
 	public void configure(Properties p) {
 		field = PropertiesConstants.getRaw(p, "field", field);
-		value = PropertiesConstants.getRaw(p, "value", value);
-		type = PropertiesConstants.getRaw(p, "type", type);
-		pattten = PropertiesConstants.getRaw(p, "pattten", pattten);
+		remainder = PropertiesConstants.getRaw(p, "remainder", remainder);
+		divisor = PropertiesConstants.getRaw(p, "divisor", divisor);
 	}
+
 }

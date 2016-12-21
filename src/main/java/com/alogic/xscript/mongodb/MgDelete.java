@@ -26,7 +26,7 @@ public class MgDelete extends MgTableOperation{
 	private Properties filterProperties;
 	
 	protected String many="false";
-	
+	protected String tagValue="$mg-insert";
 
  
 	public MgDelete(String tag, Logiclet p) {
@@ -38,6 +38,7 @@ public class MgDelete extends MgTableOperation{
 	public void configure(Properties p) {
 		super.configure(p);
 		many = PropertiesConstants.getRaw(p, "many", "");
+		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
 	}
 
 	
@@ -67,7 +68,7 @@ public class MgDelete extends MgTableOperation{
 		if(getBoolean(many, false)){
 			if(fb!=null){
 				filter=fb.getFilter(filterProperties, ctx);
-				result=collection.deleteMany(filter);				
+				result=collection.deleteMany(filter);
 			}else{
 				
 			}
@@ -79,7 +80,7 @@ public class MgDelete extends MgTableOperation{
 				
 			}
 		}
-		
+		current.put(tagValue, result);
 		log(String.format("delete doc[%s] success!", collection.getNamespace()), "info");
 		
 	}

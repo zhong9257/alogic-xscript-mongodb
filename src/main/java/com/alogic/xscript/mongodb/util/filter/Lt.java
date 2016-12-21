@@ -13,7 +13,7 @@ import com.mongodb.client.model.Filters;
  * @author zhongyi
  *
  */
-public class Gt extends FilterBuilder.Abstract{
+public class Lt extends FilterBuilder.Abstract{
 	protected String field="_id";
 	protected String value="";//毫无规则的默认值，避免误操作
 	protected String type="string";
@@ -22,7 +22,7 @@ public class Gt extends FilterBuilder.Abstract{
 
 	@Override
 	public Bson getFilter(Properties p,LogicletContext ctx){
-		return Filters.gt(field, ValueConvertor.convert(type, ctx.transform(value),null));
+		return Filters.lt(field, ValueConvertor.convert(type, ctx.transform(value),null));
 	}
 
 	@Override

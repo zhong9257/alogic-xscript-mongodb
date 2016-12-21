@@ -13,16 +13,17 @@ import com.mongodb.client.model.Filters;
  * @author zhongyi
  *
  */
-public class Gt extends FilterBuilder.Abstract{
+public class Ne extends FilterBuilder.Abstract{
+	
 	protected String field="_id";
-	protected String value="";//毫无规则的默认值，避免误操作
+	protected String value="-1qmwnebrvtc-1";//毫无规则的默认值，避免误操作
 	protected String type="string";
 	protected String pattten="";
 	
 
 	@Override
 	public Bson getFilter(Properties p,LogicletContext ctx){
-		return Filters.gt(field, ValueConvertor.convert(type, ctx.transform(value),null));
+		return Filters.ne(field, ValueConvertor.convert(type, ctx.transform(value),pattten));
 	}
 
 	@Override
@@ -32,4 +33,5 @@ public class Gt extends FilterBuilder.Abstract{
 		type = PropertiesConstants.getRaw(p, "type", type);
 		pattten = PropertiesConstants.getRaw(p, "pattten", pattten);
 	}
+
 }
