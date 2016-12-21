@@ -46,7 +46,8 @@ public class DemoFind {
 		//run("java:///xscript/MgTextSearch.xml#DemoFind",settings);
 		//run("java:///xscript/MgInsert.xml#DemoFind",settings);
 		//run("java:///xscript/MgCount.xml#DemoFind",settings);
-		run("java:///xscript/Mg2dsphereQuery.xml#DemoFind",settings);
+		//run("java:///xscript/Mg2dsphereQuery.xml#DemoFind",settings);
+		run("java:///xscript/MgTableNew.xml#DemoFind",settings);
 		
 	}
 
