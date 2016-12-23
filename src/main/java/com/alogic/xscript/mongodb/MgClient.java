@@ -42,6 +42,7 @@ public class MgClient extends MgNS{
 		PoolNaming naming  = PoolNaming.get();
 		Pool p=naming.lookup(cli);
 		MongoClient mongoClient=p.borrowObject(0, 0);
+
 		if (mongoClient == null){
 			log(String.format("Can not find the schema[%s]",mongoClient), "error");
 			return ;

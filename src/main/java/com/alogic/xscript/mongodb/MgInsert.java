@@ -22,6 +22,10 @@ import com.anysoft.util.XmlTools;
 import com.jayway.jsonpath.spi.JsonProvider;
 import com.jayway.jsonpath.spi.JsonProviderFactory;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Projections;
+import com.mongodb.operation.AggregateOperation;
+import com.mongodb.operation.GroupOperation;
 
 
 
@@ -54,16 +58,15 @@ public class MgInsert extends MgTableOperation{
 	
 	@Override
 	public void configure(Element element, Properties props) {
+		XmlElementProperties p = new XmlElementProperties(element, props);
 		
-		doc = PropertiesConstants.getRaw(props, "doc", "");
-		many = PropertiesConstants.getRaw(props, "many", many);
-		many = PropertiesConstants.getRaw(props, "idKey", idKey);
-		tagValue = PropertiesConstants.getRaw(props, "tagValue", tagValue);
+		doc = PropertiesConstants.getRaw(p, "doc", "");
+		many = PropertiesConstants.getRaw(p, "many", many);
+		idKey = PropertiesConstants.getRaw(p, "idKey", idKey);
+		tagValue = PropertiesConstants.getRaw(p, "tagValue", tagValue);
 		
 		
-		if("".equals(doc)){
-			XmlElementProperties p = new XmlElementProperties(element, props);
-			
+		if("".equals(doc)){			
 			//约定子标签doc包含的标签是用来构建doc数据
 			Element docE = XmlTools.getFirstElementByPath(element, "doc");
 			NodeList nodeList = docE.getChildNodes();
@@ -87,7 +90,7 @@ public class MgInsert extends MgTableOperation{
 			}
 		}	
 		
-		configure(props);
+		configure(p);
 	}
 
 
@@ -95,6 +98,7 @@ public class MgInsert extends MgTableOperation{
 	protected void onExecute(MongoCollection<Document> collection, Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
 		String _doc=doc;
+
 		
 		Map<String,Object> jsonData = null;		
 		if("".equals(doc)){
@@ -124,7 +128,7 @@ public class MgInsert extends MgTableOperation{
 			DocObjectIdConvertor.convert(docs, idKey);
 			current.put(tagValue,docs );
 			
-		}else{		
+		}else{
 			Document d = Document.parse(doc);
 			collection.insertOne(d);
 			DocObjectIdConvertor.convert(d, idKey);
