@@ -18,6 +18,7 @@ public class MgNS extends Segment {
 		registerModule("mg-textsearch",MgTextSearch.class);
 		registerModule("mg-count",MgCount.class);
 		registerModule("mg-2dspherequery",Mg2dsphereQuery.class);
+		registerModule("mg-aggregate",MgAggregate.class);
 	}
 
 }

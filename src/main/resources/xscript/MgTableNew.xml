@@ -3,7 +3,7 @@
 	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
-			<mg-tablenew table="ss" >
+			<mg-tablenew table="gg" capped="true" size="10000">
 			</mg-tablenew>
 		</mg-db>
 	</mg-cli>

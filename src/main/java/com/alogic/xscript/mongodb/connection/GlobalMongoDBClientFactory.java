@@ -89,6 +89,7 @@ public class GlobalMongoDBClientFactory extends Singleton{
 			        Element mongoCredentials = XmlTools.getFirstElementByPath(e, "mongoCredentials");
 			        if(null!=mongoCredentials){
 			        	NodeList mongoCredentialNodeList=XmlTools.getNodeListByPath(mongoCredentials,"mongoCredential");
+			        	credentialsList=new ArrayList<>();
 			        	if(null!=mongoCredentialNodeList&&mongoCredentialNodeList.getLength()>0){
 			        		credentialsList=new ArrayList<>();
 			        		for (int i = 0; i < mongoCredentialNodeList.getLength(); i++) {
