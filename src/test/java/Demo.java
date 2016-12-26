@@ -35,12 +35,12 @@ public class Demo {
 		Settings settings = Settings.get();		
 		settings.addSettings(new CommandLine(args));		
 		settings.addSettings("java:///conf/settings.xml#Demo", null, Settings.getResourceFactory());
-		
+
 		//run("java:///xscript/Helloworld.xml#Demo",settings);
 		//run("java:///xscript/string.xml#Demo",settings);
 		//run("java:///xscript/hash.xml#Demo",settings);
 		//run("java:///xscript/list.xml#Demo",settings);
-		run("java:///xscript/MongoDelete.xml#Demo",settings);
+		run("java:///xscript/MgDrop.xml#Demo",settings);
 		//run("java:///xscript/set.xml#Demo",settings);
 	}
 
