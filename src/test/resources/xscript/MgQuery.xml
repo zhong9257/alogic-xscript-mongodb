@@ -6,9 +6,7 @@
 			<mg-table table="stores" >
 				<mg-query tagValue="data" first="false" sort=";name,_id" limit="2" offset="1"
 				 projection="name,description">
-				<!-- <mg-query tagValue="data" first="true"> -->
 					<filter module="Eq" field="name" value="Burger Buns"></filter>
-
 				</mg-query>
 			</mg-table>
 		</mg-db>
