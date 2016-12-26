@@ -3,7 +3,7 @@ mg-count
 
 mg-count：统计，用于统计查询出来的文档数量。
 
-> 本指令对应mongodb的操作指令[count]()
+> 本指令对应mongodb的操作指令[count](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/?com/mongodb/client/MongoCollection.html#find--)
 
 ### 实现类
 

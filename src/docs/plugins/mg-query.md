@@ -3,7 +3,7 @@ mg-query
 
 mg-query：文档查询，用于查询指定数据库集合中的文档。
 
-> 本指令对应mongodb的操作指令[collection.find]()
+> 本指令对应mongodb的操作指令[collection.find](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/perform-read-operations/)
 
 ### 实现类
 

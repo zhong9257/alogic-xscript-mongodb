@@ -3,7 +3,7 @@ mg-textsearch
 
 mg-textsearch：文本搜索，用于对集合中的任意文本进行搜索，返回匹配到的文档，返回的文档按照相关度排序。
 
-> 本指令对应mongodb的操作指令[createCollection]()
+> 本指令对应mongodb的操作指令[createCollection](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/text-search/)
 
 ### 实现类
 

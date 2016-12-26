@@ -7,7 +7,7 @@ mg-tablenew：创建集合，用于在指定数据库中创建集合或固定集
 > * 普通集合:随着数据容量的增加，会自动扩容；
 > * 固定集合：其大小是固定的，当容量满了的时候，最新的文档会代替最老的文档。固定集合不能被分片。
 
-> 本指令对应mongodb的操作指令[createCollection]()
+> 本指令对应mongodb的操作指令[createCollection](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/databases-collections/)
 
 ### 实现类
 
