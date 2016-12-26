@@ -65,6 +65,7 @@ public class GlobalMongoDBClientFactory extends Singleton{
 					//解析uri,支持单服务器或者副本集和分片集群。uri格式：host:port,host:port
 					Element node = XmlTools.getFirstElementByPath(e, "uri");
 			        String uri=node.getTextContent();
+			        uri=PropertiesConstants.getString(props, uri,uri);
 			        String[] uris=uri.trim().split(",");
 			        if(uris.length>1){
 			        	

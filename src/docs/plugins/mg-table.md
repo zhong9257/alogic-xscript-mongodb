@@ -3,7 +3,7 @@ mg-table
 
 mg-table用于定位到一个mongodb的collection，并定义一个namespace。
 
-mg-table可以定义在一个[mg-db](mg-db.md)环境下；如果没有定义在[mg-db](mg-db.md)环境下，那么就需要配置cli参数和db参数，mg-table会自动根据该参数使用一个db。
+mg-table可以定义在一个[mg-db](mg-db.md)环境下；如果没有定义在[mg-db](mg-db.md)环境下，那么就需要配置cli参数、db参数、table参数，mg-table会自动根据该参数使用一个集合。
 
 mg-table并不是必须的，可以采用[mg-cli](mg-cli.md)或[mg-db](mg-db.md)替代。
 

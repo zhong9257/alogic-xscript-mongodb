@@ -21,8 +21,100 @@ com.alogic.xscript.mongodb.MgInsert
 | 6 | many | true,表示插入多个文档；false表示插入单个文档；缺省为false |
 | 7 | idKey | 指定待插入文档的ObjectId,缺省为_id |
 
->doc和docNode两种方式二选一；当doc存在且不为空，docNode也存在是；待插入文档内容为doc生效。
+>doc和docNode两种方式二选一；当doc存在且不为空，docNode也存在时；待插入文档内容为doc生效。
 
 ### 案例
 
-参考[mg-insert操作案例](case.insert.md)
+现有下列脚本
+
+、、、xml
+<script>
+	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
+	<using xmlTag = "mg-db" module="com.alogic.xscript.mongodb.MgDB"/>
+	<using xmlTag = "mg-table" module="com.alogic.xscript.mongodb.MgTable"/>
+	
+ 	<mg-cli cli="globalMongoDBClientPool">
+		<mg-db db="demo">
+			<mg-table table="test" >
+				<mg-insert tag="insert-cli" many="false" doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;b&quot;: &quot;bb-cli&quot;}">
+				</mg-insert>
+			</mg-table>
+		</mg-db>
+	</mg-cli>
+	
+	
+
+	<mg-db cli="globalMongoDBClientPool" db="demo">
+		<mg-table table="test" >
+			<mg-insert tag="insert-db" many="true" doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;b&quot;: &quot;bb-db&quot;},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;b&quot;: &quot;bc-db&quot;}]">
+			</mg-insert>
+		</mg-table>
+	</mg-db>
+
+	
+	
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" >
+		<mg-insert tag="insert-table" many="true" docNode="doc" docResultNode="doc">
+				<!-- 子指令里取内容 -->
+			<doc>
+				<set id="array" value="tom;jerry;alogic;ketty"/>
+				<array tag="doc">			
+                    <foreach in="${array}">
+                            <array-item>
+                                    <get id="a" value="${$value}"/>
+                                    <get id="b" value="${$value}"/>
+                            </array-item>
+                    </foreach>
+            </array>
+			</doc>
+		</mg-insert>
+	</mg-table>
+	
+</script>
+、、、  
+
+结果
+
+、、、json
+	{
+    "insert-table": [
+        {
+            "b": "tom", 
+            "a": "tom", 
+            "_id": "58608ec4d20a622888fe5b8d"
+        }, 
+        {
+            "b": "jerry", 
+            "a": "jerry", 
+            "_id": "58608ec4d20a622888fe5b8e"
+        }, 
+        {
+            "b": "alogic", 
+            "a": "alogic", 
+            "_id": "58608ec4d20a622888fe5b8f"
+        }, 
+        {
+            "b": "ketty", 
+            "a": "ketty", 
+            "_id": "58608ec4d20a622888fe5b90"
+        }
+    ], 
+    "insert-db": [
+        {
+            "a": "aa-db", 
+            "b": "bb-db", 
+            "_id": "58608ec4d20a622888fe5b8b"
+        }, 
+        {
+            "a": "ac-db", 
+            "b": "bc-db", 
+            "_id": "58608ec4d20a622888fe5b8c"
+        }
+    ], 
+    "insert-cli": {
+        "a": "aa-cli", 
+        "b": "bb-cli", 
+        "_id": "58608ec4d20a622888fe5b8a"
+    }
+}	
+、、、

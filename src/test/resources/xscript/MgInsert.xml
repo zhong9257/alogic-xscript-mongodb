@@ -4,41 +4,40 @@
 	<using xmlTag = "mg-db" module="com.alogic.xscript.mongodb.MgDB"/>
 	<using xmlTag = "mg-table" module="com.alogic.xscript.mongodb.MgTable"/>
 	
-	<checkAndSet id="htable" dft="aaabbb"/>
-
-	
-<!-- <mongo-table uri="mongodb://10.19.156.250:27017" table="zytest" db="mydb">
-		<mongo-insert many="false" doc="{ &quot;a&quot;: &quot;aa&quot;, &quot;b&quot;: &quot;bb&quot;}"></mongo-insert>
-	</mongo-table> -->
-	
-<!-- 	<mg-cli cli="globalMongoDBClientPool">
-		<mg-db db="mydb">
-			<mg-table cli="globalMongoDBClientPool" db="mydb" table="zytest" >
-				<mg-insert tagValue="insert1" many="true" doc="[{ &quot;a&quot;: &quot;aa&quot;, &quot;b&quot;: &quot;bb&quot;},{ &quot;a&quot;: &quot;ac&quot;, &quot;b&quot;: &quot;bc&quot;}]">
-				子指令里取内容
-					<doc></doc>
+ 	<mg-cli cli="globalMongoDBClientPool">
+		<mg-db db="demo">
+			<mg-table table="test" >
+				<mg-insert tag="insert-cli" many="false" doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;b&quot;: &quot;bb-cli&quot;}">
 				</mg-insert>
 			</mg-table>
 		</mg-db>
-	</mg-cli> -->
+	</mg-cli>
 	
 	
 
-	<mg-db cli="globalMongoDBClientPool" db="mydb">
-		<mg-table cli="globalMongoDBClientPool" db="mydb" table="zytest" >
-			<mg-insert tagValue="insert1" many="true" doc="[{ &quot;a&quot;: &quot;aa&quot;, &quot;b&quot;: &quot;bb&quot;},{ &quot;a&quot;: &quot;ac&quot;, &quot;b&quot;: &quot;bc&quot;}]">
-			子指令里取内容
-				<doc></doc>
+	<mg-db cli="globalMongoDBClientPool" db="demo">
+		<mg-table table="test" >
+			<mg-insert tag="insert-db" many="true" doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;b&quot;: &quot;bb-db&quot;},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;b&quot;: &quot;bc-db&quot;}]">
 			</mg-insert>
 		</mg-table>
 	</mg-db>
 
 	
 	
-	<mg-table cli="globalMongoDBClientPool" db="mydb" table="zytest" >
-		<mg-insert tagValue="insert1" many="true" doc="[{ &quot;a&quot;: &quot;aa&quot;, &quot;b&quot;: &quot;bb&quot;},{ &quot;a&quot;: &quot;ac&quot;, &quot;b&quot;: &quot;bc&quot;}]">
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" >
+		<mg-insert tag="insert-table" many="true" docNode="doc" docResultNode="doc">
 				<!-- 子指令里取内容 -->
-			<doc></doc>
+			<doc>
+				<set id="array" value="tom;jerry;alogic;ketty"/>
+				<array tag="doc">			
+                    <foreach in="${array}">
+                            <array-item>
+                                    <get id="a" value="${$value}"/>
+                                    <get id="b" value="${$value}"/>
+                            </array-item>
+                    </foreach>
+            </array>
+			</doc>
 		</mg-insert>
 	</mg-table>
 	
