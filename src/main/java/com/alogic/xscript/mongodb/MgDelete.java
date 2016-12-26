@@ -1,5 +1,6 @@
 package com.alogic.xscript.mongodb;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bson.Document;
@@ -26,7 +27,7 @@ public class MgDelete extends MgTableOperation{
 	private Properties filterProperties;
 	
 	protected String many="false";
-	protected String tagValue="$mg-insert";
+
 
  
 	public MgDelete(String tag, Logiclet p) {
@@ -37,56 +38,66 @@ public class MgDelete extends MgTableOperation{
 	@Override
 	public void configure(Properties p) {
 		super.configure(p);
-		many = PropertiesConstants.getRaw(p, "many", "");
-		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
+		
 	}
 
 	
     @Override
-    public void configure(Element e, Properties p) {
-        Properties props = new XmlElementProperties(e, p);
-        filterProperties=props;
+    public void configure(Element e, Properties props) {
+        Properties p = new XmlElementProperties(e, props);
+        many = PropertiesConstants.getRaw(p, "many", "");
+		tag = PropertiesConstants.getRaw(p, "tag", "$mg-delete");
+        
+        
+        filterProperties=p;
         
         Element filter = XmlTools.getFirstElementByPath(e, "filter");
         if (filter != null) {
             FilterBuilder.TheFactory f = new FilterBuilder.TheFactory();
             try {
-                fb = f.newInstance(filter, props, "module");
+                fb = f.newInstance(filter, p, "module");
                 
             } catch (Exception ex) {
                 log("Can not create instance of FilterBuilder.", "error");
             }
         }
-        configure(props);
+        configure(p);
     }
 
 	@Override
 	protected void onExecute(MongoCollection<Document> collection, Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
-		
+				
 		DeleteResult result=null;
 		if(getBoolean(many, false)){
 			if(fb!=null){
 				filter=fb.getFilter(filterProperties, ctx);
 				result=collection.deleteMany(filter);
 			}else{
-				
+				result=collection.deleteMany(Document.parse("{}"));
 			}
 		}else{
 			if(fb!=null){
 				filter=fb.getFilter(filterProperties, ctx);
 				result=collection.deleteOne(filter);
 			}else{
-				
+				result=collection.deleteOne(Document.parse("{}"));
 			}
 		}
-		current.put(tagValue, result);
+		current.put(tag, deleteResultConvert(result));
 		log(String.format("delete doc[%s] success!", collection.getNamespace()), "info");
 		
 	}
 	
-	public static void main(String[] args) {
+	private Map<String,Object> deleteResultConvert(DeleteResult r){
+		Map<String,Object> m= new HashMap<>();
+		if(null!=r){
+			m.put("deletedCount", r.getDeletedCount());
+		}else{
+			m.put("deletedCount", "");
+		}
 		
-	}
+		return m;
+	} 
 
 }

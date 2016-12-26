@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<script>
+	<using xmlTag="mg-table" module="com.alogic.xscript.mongodb.MgTable" />
+
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" >
+		<mg-drop tag="drop1">
+		</mg-drop>
+	</mg-table>
+
+
+</script>

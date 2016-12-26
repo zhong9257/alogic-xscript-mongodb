@@ -1,17 +1,19 @@
 <?xml version="1.0"?>
 <script>
-	<using xmlTag = "mongo-table" module="com.alogic.xscript.mongodb.MongoTable"/>
-	
-	<checkAndSet id="htable" dft="aaabbb"/>
+	<using xmlTag="mg-table" module="com.alogic.xscript.mongodb.MgTable" />
 
-	
-	<mongo-table uri="mongodb://10.19.156.250:27017" table="zytest" db="mydb">
-		<mongo-delete>		
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" >
+		<mg-delete many="false">
+		</mg-delete>
+	</mg-table>
+
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" tag="delete2">
+		<mg-delete many="false">
 			<filter module="And">
-				<filter module="Eq" field="a" value="aa"></filter>
-				<filter module="Eq" field="b" value="bb"></filter>
+				<filter module="Eq" field="a" value="aa-cli"></filter>
+				<filter module="Eq" field="num" value="305" type="integer"></filter>
 			</filter>
-		</mongo-delete>
-	</mongo-table>
-		
+		</mg-delete>
+	</mg-table>
+
 </script>

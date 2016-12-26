@@ -19,19 +19,23 @@ public class ValueConvertor {
 		
 		if("".equals(type)||ValueType.TSTRING.getType().equals(type)){
 			return value;
+		}else if(ValueType.TINTEGER.getType().equals(type)){
+			return Integer.parseInt(value);
+		}else if(ValueType.TLONG.getType().equals(type)){
+			return Long.parseLong(value);
 		}else if(ValueType.TDOUBLE.getType().equals(type)){
-			return Double.parseDouble(type);
+			return Double.parseDouble(value);
 		}else if(ValueType.TBOOLEAN.getType().equals(type)){
-			return Boolean.parseBoolean(type);
+			return Boolean.parseBoolean(value);
 		}else if(ValueType.TOBJECTID.getType().equals(type)){
-			return new ObjectId(type);
+			return new ObjectId(value);
 		}else if(ValueType.TNULL.getType().equals(type)){
 			return null;
 		}else if(ValueType.TDATE.getType().equals(type)){
 			SimpleDateFormat sdf = new SimpleDateFormat(pattten);
 			Date date;
 			try {
-				date = sdf.parse(pattten);
+				date = sdf.parse(value);
 			} catch (ParseException e) {
 				throw new RuntimeException(e.getMessage());
 			}

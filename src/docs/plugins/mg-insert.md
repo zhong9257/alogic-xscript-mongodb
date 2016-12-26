@@ -27,7 +27,7 @@ com.alogic.xscript.mongodb.MgInsert
 
 现有下列脚本
 
-、、、xml
+```xml
 <script>
 	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
 	<using xmlTag = "mg-db" module="com.alogic.xscript.mongodb.MgDB"/>
@@ -71,11 +71,11 @@ com.alogic.xscript.mongodb.MgInsert
 	</mg-table>
 	
 </script>
-、、、  
+```
 
 结果
 
-、、、json
+```json
 	{
     "insert-table": [
         {
@@ -117,4 +117,4 @@ com.alogic.xscript.mongodb.MgInsert
         "_id": "58608ec4d20a622888fe5b8a"
     }
 }	
-、、、
+```

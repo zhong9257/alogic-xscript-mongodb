@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<script>
+	<using xmlTag = "mg-table" module="com.alogic.xscript.mongodb.MgTable"/>
+		
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" >
+		<mg-update many="true" doc="{$inc:{num:100}}">		
+			<filter module="And">
+				<filter module="Eq" field="a" value="aa-cli" ></filter>
+				<filter module="Eq" field="num" value="305" type="integer"></filter>
+			</filter>
+		</mg-update>
+	</mg-table>
+	
+</script>

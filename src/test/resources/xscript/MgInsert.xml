@@ -7,7 +7,7 @@
  	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="demo">
 			<mg-table table="test" >
-				<mg-insert tag="insert-cli" many="false" doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;b&quot;: &quot;bb-cli&quot;}">
+				<mg-insert tag="insert-cli" many="false" doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;num&quot;: 5}">
 				</mg-insert>
 			</mg-table>
 		</mg-db>
@@ -17,7 +17,7 @@
 
 	<mg-db cli="globalMongoDBClientPool" db="demo">
 		<mg-table table="test" >
-			<mg-insert tag="insert-db" many="true" doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;b&quot;: &quot;bb-db&quot;},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;b&quot;: &quot;bc-db&quot;}]">
+			<mg-insert tag="insert-db" many="true" doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;num&quot;: 22},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;num&quot;:10}]">
 			</mg-insert>
 		</mg-table>
 	</mg-db>
@@ -33,7 +33,7 @@
                     <foreach in="${array}">
                             <array-item>
                                     <get id="a" value="${$value}"/>
-                                    <get id="b" value="${$value}"/>
+                                    <get id="num" value="22"/>
                             </array-item>
                     </foreach>
             </array>

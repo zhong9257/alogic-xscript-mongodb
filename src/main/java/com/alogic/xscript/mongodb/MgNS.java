@@ -12,7 +12,9 @@ public class MgNS extends Segment {
 		registerModule("mg-db",MgDB.class);
 		registerModule("mg-table",MgTable.class);
 		registerModule("mg-tablenew",MgTableNew.class);
+		registerModule("mg-drop",MgTableDrop.class);
 		registerModule("mg-insert",MgInsert.class);
+		registerModule("mg-update",MgUpdate.class);
 		registerModule("mg-delete",MgDelete.class);
 		registerModule("mg-query",MgQuery.class);
 		registerModule("mg-textsearch",MgTextSearch.class);
