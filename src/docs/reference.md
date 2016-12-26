@@ -7,7 +7,7 @@ alogic-xscript-mongodb插件包括：
 - [mongoDB数据库mg-db](plugins/mg-db.md)
 - [mongoDB集合mg-table](plugins/mg-table.md)
 - db的操作 [查看案例](plugins/case.string.md)
-	- [创建集合mg-tablenew](plugins/mg-tablenew)
+	- [创建集合mg-tablenew](plugins/mg-tablenew.md)
 - table的通用操作
 	- [插入文档mg-insert](plugins/mg-insert.md)
 	- [更新文档mg-update](plugins/mg-update.md)

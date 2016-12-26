@@ -3,7 +3,7 @@ mg-textsearch
 
 mg-textsearch：文本搜索，用于对集合中的任意文本进行搜索，返回匹配到的文档，返回的文档按照相关度排序。
 
-> 本指令对应mongodb的操作指令[createCollection]()
+> 本指令对应mongodb的操作指令[createCollection](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/text-search/)
 
 ### 实现类
 
@@ -25,9 +25,30 @@ com.alogic.xscript.mongodb.MgTextSearch
 
 ### 案例
 
+实验在数据库test，集合stores上进行测试，测试数据如下：
+
+![image](mg-query.png)
+
+> 文本搜索条件：搜索关键字为Shopping Java，显示相关度分数，返回文档数量为2
+
 输出结果：
 ```
-
+{
+    "data": [
+        {
+            "_id": 5, 
+            "name": "Java Shopping", 
+            "description": "Indonesian goods", 
+            "score": 1.5
+        }, 
+        {
+            "_id": 1, 
+            "name": "Java Hut", 
+            "description": "Coffee and cakes", 
+            "score": 0.75
+        }
+    ]
+}
 ```
 #### 实现
 
@@ -39,7 +60,7 @@ com.alogic.xscript.mongodb.MgTextSearch
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-textsearch tagValue="data" keywords="Shopping Java" textscore="true" limit="2" offset="1">
+				<mg-textsearch tagValue="data" keywords="Shopping Java" textscore="true" limit="2">
 				</mg-textsearch>
 			</mg-table>
 		</mg-db>

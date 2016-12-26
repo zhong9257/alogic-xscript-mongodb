@@ -3,7 +3,7 @@ mg-query
 
 mg-query：文档查询，用于查询指定数据库集合中的文档。
 
-> 本指令对应mongodb的操作指令[collection.find]()
+> 本指令对应mongodb的操作指令[collection.find](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/perform-read-operations/)
 
 ### 实现类
 
@@ -26,10 +26,26 @@ com.alogic.xscript.mongodb.MgQuery
 | 9 | filter | 子标签 |用于对集合中的文档进行过滤|
 
 ### 案例
+实验在数据库test，集合stores上进行测试，测试数据如下：
+
+![image](mg-query.png)
+
+> 查询条件：查询全部文档，对name和_id字段进行逆排序，返回文档数量为2，跳过文档数量为1，只返回name字段
 
 输出结果：
 ```
-
+{
+    "data": [
+        {
+            "_id": 6, 
+            "name": "Burger Buns"
+        }, 
+        {
+            "_id": 2, 
+            "name": "Burger Buns"
+        }
+    ]
+}
 ```
 #### 实现
 
@@ -42,7 +58,7 @@ com.alogic.xscript.mongodb.MgQuery
 		<mg-db db="test">
 			<mg-table table="stores" >
 				<mg-query tagValue="data" first="false" sort=";name,_id" limit="2" offset="1"
-				 projection="name,description">
+				 projection="name">
 					<filter module="Eq" field="name" value="Burger Buns"></filter>
 				</mg-query>
 			</mg-table>

@@ -4,7 +4,7 @@
 		<pool id="globalMongoDBClientPool" module="com.alogic.xscript.mongodb.connection.GlobalMongoDBClientFactory">
 			<uri>${mongod.uris}</uri>
 			<mongoCredentials>
-				<mongoCredential username="u" password="p" coder="" authenticationDB="demo"></mongoCredential>
+				<!-- <mongoCredential username="u" password="p" coder="" authenticationDB="demo"></mongoCredential> -->
 			</mongoCredentials>                                               
 			<mongoClientOptions></mongoClientOptions>
 		</pool>
