@@ -24,24 +24,31 @@ com.alogic.xscript.mongodb.MMg2dsphereQuery
 | 5 | field | 区域参数，自定义 |格式：第一个参数是要查询的键；之后的参数是数值（多边形是一对对坐标的x,y值；长方形是左下角到右上角的x,y值；圆形是圆形坐标x,y值和半径；near参数是指定地点的x,y值，距离指定地点的最大值max和最小值min）| |
 
 ### 案例
-实验在数据库test，集合stores上进行测试，
-![image](mg-query.png)
+实验在数据库test，集合sphere上进行测试，测试数据如下：
+
+![image](mg-2dsphere.png)
+
+> 地理查询条件：使用圆形范围查找，圆心为(0.0, 0.0),范围半径为5(0=<r<5)
 
 输出结果：
 ```
 {
     "data": [
         {
-            "_id": 6, 
-            "name": "Burger Buns"
-        }, 
-        {
-            "_id": 2, 
-            "name": "Burger Buns", 
-            "description": "Gourmet hamburgers"
+            "_id": "5858e64c0546ca21ecfda58e", 
+            "loc": {
+                "type": "Point", 
+                "coordinates": [
+                    0, 
+                    0
+                ]
+            }, 
+            "name": "Center", 
+            "category": "Buildings"
         }
     ]
 }
+
 ```
 #### 实现
 
@@ -53,7 +60,7 @@ com.alogic.xscript.mongodb.MMg2dsphereQuery
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="sphere" >
-				<mg-2dspherequery tagValue="data" mode="inCircle" field="loc,0,0,10">
+				<mg-2dspherequery tagValue="data" mode="inCircle" field="loc,0,0,5">
 				</mg-2dspherequery>
 			</mg-table>
 		</mg-db>

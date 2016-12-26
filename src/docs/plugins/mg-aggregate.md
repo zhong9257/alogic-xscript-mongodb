@@ -35,9 +35,38 @@ com.alogic.xscript.mongodb.MgAggregate
 | 7 | unwind | 自定义 |拆分数组|{$unwind:数组名}|
 ### 案例
 
+实验在数据库test，集合stores上进行测试，测试数据如下：
+
+![image](mg-query.png)
+
+> 聚合条件：统计字段为name，计算每个name值出现的次数
+
 输出结果：
 ```
-
+{
+    "data": [
+        {
+            "_id": "Java Hut", 
+            "count": 1
+        }, 
+        {
+            "_id": "Burger Buns", 
+            "count": 3
+        }, 
+        {
+            "_id": "Clothes Clothes Clothes", 
+            "count": 1
+        }, 
+        {
+            "_id": "Coffee Shop", 
+            "count": 1
+        }, 
+        {
+            "_id": "Java Shopping", 
+            "count": 1
+        }
+    ]
+}
 ```
 #### 实现
 

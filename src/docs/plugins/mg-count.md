@@ -22,9 +22,17 @@ com.alogic.xscript.mongodb.MgCount
 
 ### 案例
 
+实验在数据库test，集合stores上进行测试，测试数据如下：
+
+![image](mg-query.png)
+
+> 过滤条件：统计"name"="Burger Buns"的文档数量
+
 输出结果：
 ```
-
+{
+    "count": 3
+}
 ```
 #### 实现
 
