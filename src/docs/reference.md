@@ -12,6 +12,6 @@ alogic-xscript-mongodb插件包括：
 	- [设置范围值kv-setrange](plugins/kv-setrange.md)
 	- [获取取值的字符串长度kv-strlen](plugins/kv-strlen.md)
 - table的通用操作
-	- [插入kv-del](plugins/kv-del.md)
-	- [是否存在kv-exist](plugins/kv-exist.md)
+	- [插入文档mg-insert](plugins/mg-insert.md)
+	- [更新文档mg-update](plugins/mg-update.md)
 	- [ttl操作kv-ttl](plugins/kv-ttl.md)

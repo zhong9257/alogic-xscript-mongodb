@@ -39,7 +39,8 @@ public class MgInsert extends MgTableOperation{
 	protected String doc="";
 	protected String many="false";
 	protected String idKey="_id";
-	protected String tagValue="$mg-insert";
+	protected String docNode="doc";
+	protected String docResultNode="doc";
 	
 	protected static JsonProvider provider = null;	
 	static {
@@ -61,14 +62,16 @@ public class MgInsert extends MgTableOperation{
 		XmlElementProperties p = new XmlElementProperties(element, props);
 		
 		doc = PropertiesConstants.getRaw(p, "doc", "");
+		docNode = PropertiesConstants.getRaw(p, "docNode", docNode);
+		docResultNode = PropertiesConstants.getRaw(p, "docResultNode", docResultNode);
 		many = PropertiesConstants.getRaw(p, "many", many);
 		idKey = PropertiesConstants.getRaw(p, "idKey", idKey);
-		tagValue = PropertiesConstants.getRaw(p, "tagValue", tagValue);
+		tag = PropertiesConstants.getRaw(p, "tag", "$mg-insert");
 		
 		
 		if("".equals(doc)){			
 			//约定子标签doc包含的标签是用来构建doc数据
-			Element docE = XmlTools.getFirstElementByPath(element, "doc");
+			Element docE = XmlTools.getFirstElementByPath(element, docNode);
 			NodeList nodeList = docE.getChildNodes();
 			
 			for (int i = 0 ; i < nodeList.getLength() ; i ++){
@@ -108,7 +111,7 @@ public class MgInsert extends MgTableOperation{
 			}
 			
 			//约定子标签构造的数据放到doc节点下
-			Object o=jsonData.get("doc");
+			Object o=jsonData.get(docResultNode);
 			doc=provider.toJson(o);
 						
 		}else{
@@ -126,13 +129,13 @@ public class MgInsert extends MgTableOperation{
 			
 			collection.insertMany(docs);
 			DocObjectIdConvertor.convert(docs, idKey);
-			current.put(tagValue,docs );
+			current.put(tag,docs );
 			
 		}else{
 			Document d = Document.parse(doc);
 			collection.insertOne(d);
 			DocObjectIdConvertor.convert(d, idKey);
-			current.put(tagValue, d);
+			current.put(tag, d);
 		}
 		
 		log(String.format("insert doc[%s] success!", collection.getNamespace()), "info");
