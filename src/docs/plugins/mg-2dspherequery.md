@@ -60,7 +60,7 @@ com.alogic.xscript.mongodb.MMg2dsphereQuery
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="sphere" >
-				<mg-2dspherequery tagValue="data" mode="inCircle" field="loc,0,0,5">
+				<mg-2dspherequery tag="data" mode="inCircle" field="loc,0,0,5">
 				</mg-2dspherequery>
 			</mg-table>
 		</mg-db>

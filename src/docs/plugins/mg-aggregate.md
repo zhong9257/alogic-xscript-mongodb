@@ -78,7 +78,7 @@ com.alogic.xscript.mongodb.MgAggregate
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-aggregate tagValue="data" 
+				<mg-aggregate tag="data" 
 				doc="[{&quot;$group&quot;:{&quot;_id&quot;:&quot;$name&quot;,&quot;count&quot;:{&quot;$sum&quot;:1}}}]">
 				</mg-aggregate>
 			</mg-table>

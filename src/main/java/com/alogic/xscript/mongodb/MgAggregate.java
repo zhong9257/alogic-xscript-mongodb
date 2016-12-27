@@ -27,7 +27,11 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
-
+/**
+ * 聚合框架 version 1.0
+ * @author cenwan
+ *
+ */
 public class MgAggregate extends MgTableOperation{
 	
 	protected String doc="";
@@ -49,13 +53,12 @@ public class MgAggregate extends MgTableOperation{
 	@Override
 	public void configure(Element element, Properties p) {
 		XmlElementProperties props = new XmlElementProperties(element, p);
+		
 		doc = PropertiesConstants.getRaw(props, "doc", "");
 		idKey = PropertiesConstants.getRaw(props, "idKey", idKey);
-		tag = PropertiesConstants.getRaw(p, "tag", "$mg-aggregate");
+		tag = PropertiesConstants.getRaw(props, "tag", "$mg-aggregate");
+		
 		if("".equals(doc)){
-			
-			
-			//约定子标签doc包含的标签是用来构建doc数据
 			Element docE = XmlTools.getFirstElementByPath(element, "doc");
 			NodeList nodeList = docE.getChildNodes();
 			
@@ -89,7 +92,6 @@ public class MgAggregate extends MgTableOperation{
 			for (Logiclet child:children){
 				child.execute(jsonData, jsonData, ctx, watcher);
 			}
-			
 			//约定子标签构造的数据放到doc节点下
 			Object o=jsonData.get("doc");
 			doc=provider.toJson(o);

@@ -17,7 +17,7 @@ import com.anysoft.util.XmlTools;
 import com.mongodb.client.MongoCollection;
 
 /**
- * 根据查询条件，返回文档的数量 version 1.0
+ * 统计文档 version 1.0
  * @author cenwan
  *
  */
@@ -36,6 +36,7 @@ public class MgCount extends MgTableOperation{
     public void configure(Element e, Properties p) {
         Properties props = new XmlElementProperties(e, p);
         filterProperties=props;
+        
         tag = PropertiesConstants.getRaw(props, "tag", "$mg-count");
         
         Element filter = XmlTools.getFirstElementByPath(e, "filter");
@@ -54,7 +55,7 @@ public class MgCount extends MgTableOperation{
 	protected void onExecute(MongoCollection<Document> collection, Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
 		long count = 0;
-    	if(fb!=null){//根据指定段匹配文档
+    	if(fb!=null){
 			filter=fb.getFilter(filterProperties, ctx);
 			count = collection.count(filter);
 		} else {

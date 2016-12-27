@@ -4,7 +4,7 @@
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-aggregate tag="data" 
+				<mg-aggregate 
 				doc="[{&quot;$group&quot;:{&quot;_id&quot;:&quot;$name&quot;,&quot;count&quot;:{&quot;$sum&quot;:1}}}]">
 				</mg-aggregate>
 			</mg-table>

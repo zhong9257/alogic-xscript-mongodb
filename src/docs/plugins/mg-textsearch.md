@@ -60,7 +60,7 @@ com.alogic.xscript.mongodb.MgTextSearch
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-textsearch tagValue="data" keywords="Shopping Java" textscore="true" limit="2">
+				<mg-textsearch tag="data" keywords="Shopping Java" textscore="true" limit="2">
 				</mg-textsearch>
 			</mg-table>
 		</mg-db>

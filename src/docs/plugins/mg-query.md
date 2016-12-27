@@ -57,7 +57,7 @@ com.alogic.xscript.mongodb.MgQuery
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-query tagValue="data" first="false" sort=";name,_id" limit="2" offset="1"
+				<mg-query tag="data" first="false" sort=";name,_id" limit="2" offset="1"
 				 projection="name">
 					<filter module="Eq" field="name" value="Burger Buns"></filter>
 				</mg-query>

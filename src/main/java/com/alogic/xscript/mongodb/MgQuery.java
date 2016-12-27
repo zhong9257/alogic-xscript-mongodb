@@ -26,7 +26,7 @@ import com.mongodb.client.model.Sorts;
 import static com.mongodb.client.model.Projections.*;
 
 /**
- * 文档查找 version 1.0
+ * 文档查询 version 1.0
  * @author cenwan
  *
  */
@@ -34,11 +34,11 @@ public class MgQuery extends MgTableOperation{
 	
 	private Properties filterProperties;
 	
-	protected String first="";//first为true时，只返回最先匹配到的一个文档；其他情况返回多个文档
-	protected String sort = "";//对指定字段进行排序，可以有多个字段,用逗号隔开，升序字段放到分号前面，降序字段放分号后面.mongodb是先排序后limit
-	protected String offset="";//跳过指定数量的文档
-	protected String limit="";//返回指定数量的文档，只有first为false时有效
-	protected String projection="";//返回指定字段
+	protected String first="";
+	protected String sort = "";
+	protected String offset="";
+	protected String limit="";
+	protected String projection="";
 	
     protected FilterBuilder fb = null;
     protected Bson filter = null;
@@ -48,21 +48,17 @@ public class MgQuery extends MgTableOperation{
 	}
 	
 	@Override
-	public void configure(Properties p) {
-		super.configure(p);
-		tag = PropertiesConstants.getRaw(p, "tag", "$mg-query");
-		first = PropertiesConstants.getRaw(p, "first", "");
-		sort = PropertiesConstants.getRaw(p, "sort", "");
-		offset = PropertiesConstants.getRaw(p, "offset", "");
-		limit = PropertiesConstants.getRaw(p, "limit", "");
-		projection = PropertiesConstants.getRaw(p, "projection", "");
-	}
-	
-	@Override
     public void configure(Element e, Properties p) {
         Properties props = new XmlElementProperties(e, p);
         filterProperties=props;
         
+		tag = PropertiesConstants.getRaw(props, "tag", "$mg-query");
+		first = PropertiesConstants.getRaw(props, "first", "");
+		sort = PropertiesConstants.getRaw(props, "sort", "");
+		offset = PropertiesConstants.getRaw(props, "offset", "");
+		limit = PropertiesConstants.getRaw(props, "limit", "");
+		projection = PropertiesConstants.getRaw(props, "projection", "");
+		
         Element filter = XmlTools.getFirstElementByPath(e, "filter");
         if (filter != null) {
             FilterBuilder.TheFactory f = new FilterBuilder.TheFactory();
@@ -79,7 +75,7 @@ public class MgQuery extends MgTableOperation{
 	protected void onExecute(MongoCollection<Document> collection, Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
             
-            if(getBoolean(first, false)){//first为true的时候，只返回最先匹配到的一个文档
+            if(getBoolean(first, false)){
             	Document doc = null;
     			if(fb!=null){
     				filter=fb.getFilter(filterProperties, ctx);
@@ -102,25 +98,38 @@ public class MgQuery extends MgTableOperation{
 				}	
 				current.put(tag,map);
 				
-            } else {//返回多个匹配的文档
+            } else {
             	FindIterable<Document> iter = null;
-            	if(fb!=null){//根据指定段匹配文档
+            	if(fb!=null){
     				filter=fb.getFilter(filterProperties, ctx);
     				iter = collection.find(filter);
     			} else {
     				iter = collection.find();
     			}
             	
-            	if(sort != ""){//对指定字段排序
-            		int index = sort.indexOf(';');
-            		String descendPart = sort.substring(index + 1,sort.length());
-            		String ascendPart = sort.substring(0,index);
-            		if(index == 0){
-            			iter = iter.sort(Sorts.descending(stringToArray(descendPart)));
-            		} else if ((index + 1) == sort.length()){
-            			iter = iter.sort(Sorts.ascending(stringToArray(ascendPart)));
+            	if(sort != ""){
+            		String str = sort;
+            		if (str.indexOf(' ') == (-1)) {
+            			iter = iter.sort(Sorts.ascending(stringToArray(str)));
             		} else {
-            			iter = iter.sort(Sorts.orderBy(Sorts.ascending(stringToArray(ascendPart)), Sorts.descending(stringToArray(descendPart))));
+            			while(true){
+            				int index = str.indexOf(' ');
+            				if(str.substring(index + 1, index + 2).equals("D")){
+            					iter = iter.sort(Sorts.descending(stringToArray(str.substring(0, index))));
+            					if(index + 6 > str.length()){
+            						break;
+            					}
+            					str = str.substring(index + 6);
+            				} else if(str.substring(index + 1, index + 2).equals("A")){
+            					iter = iter.sort(Sorts.ascending(stringToArray(str.substring(0, index))));
+            					if(index + 5 > str.length()){
+            						break;
+            					}
+            					str = str.substring(index + 5);
+            				} else {
+            					break;
+            				}
+            			}
             		}
             	}
             	
@@ -128,7 +137,7 @@ public class MgQuery extends MgTableOperation{
             		iter = iter.skip(getInt(offset,0));
             	}
             	
-            	if(limit != null){//limit不为空时，返回 指定数量的个文档，limit为0或空 时都返回全部文档，其他情况返回|limit|数量的文档
+            	if(limit != null){
             		iter = iter.limit(getInt(limit,0));
             	}
             	

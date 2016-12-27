@@ -24,7 +24,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 
 /**
- * 根据2d球面坐标查询 version 1.0
+ * 地理空间查询 version 1.0
  * @author cenwan
  *
  */
@@ -40,16 +40,13 @@ public class Mg2dsphereQuery extends MgTableOperation{
 	}
 	
 	@Override
-	public void configure(Properties p) {
-		super.configure(p);
-		mode = PropertiesConstants.getRaw(p, "mode", "");//选择查询方式，包括多边形(inPolygon)、长方形(inBox)、圆形(inCircle)内部查找，范围查找(near)
-		field = PropertiesConstants.getRaw(p, "field", "");//依次输入查找的字段，坐标点的x、y值，inCircle方式还要输入半径值，near方式需要输入min和max距离
-		tag = PropertiesConstants.getRaw(p, "tag", "$mg-2dspherequery");
-	}
-	
-	@Override
     public void configure(Element e, Properties p) {
         Properties props = new XmlElementProperties(e, p);
+        
+		mode = PropertiesConstants.getRaw(props, "mode", "");
+		field = PropertiesConstants.getRaw(props, "field", "");
+		tag = PropertiesConstants.getRaw(props, "tag", "$mg-2dspherequery");
+		
         Element filter = XmlTools.getFirstElementByPath(e, "filter");
         if (filter != null) {
             FilterBuilder.TheFactory f = new FilterBuilder.TheFactory();

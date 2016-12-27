@@ -26,10 +26,10 @@ import com.mongodb.client.model.Sorts;
  */
 public class MgTextSearch extends MgTableOperation{
 	
-	protected String keywords="";//要匹配的字段，按照匹配度排序
-	protected String textscore = "";//是否返回searchterm的相关度分数
-	protected String offset="";//跳过指定个文档
-	protected String limit="";//返回指定数量的文档
+	protected String keywords="";
+	protected String textscore = "";
+	protected String offset="";
+	protected String limit="";
 
 	public MgTextSearch(String tag, Logiclet p) {
 		super(tag, p);
@@ -65,7 +65,7 @@ public class MgTextSearch extends MgTableOperation{
         		iter = iter.skip(getInt(offset,0));
         	}
         	
-        	if(limit != null){//limit不为空时，返回 指定数量的个文档，limit为0或空 时都返回全部文档，其他情况返回|limit|数量的文档
+        	if(limit != null){
         		iter = iter.limit(getInt(limit,0));
         	}
         	

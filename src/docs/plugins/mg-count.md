@@ -44,7 +44,7 @@ com.alogic.xscript.mongodb.MgCount
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-count tagValue="count">
+				<mg-count tag="count">
 					<filter module="Eq" field="name" value="Burger Buns"></filter>
 				</mg-count>
 			</mg-table>
