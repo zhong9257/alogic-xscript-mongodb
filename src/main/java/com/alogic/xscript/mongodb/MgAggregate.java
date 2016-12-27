@@ -32,7 +32,6 @@ public class MgAggregate extends MgTableOperation{
 	
 	protected String doc="";
 	protected String idKey="_id";
-	protected String tagValue="";
 	
 	protected static JsonProvider provider = null;	
 	static {
@@ -52,8 +51,7 @@ public class MgAggregate extends MgTableOperation{
 		XmlElementProperties props = new XmlElementProperties(element, p);
 		doc = PropertiesConstants.getRaw(props, "doc", "");
 		idKey = PropertiesConstants.getRaw(props, "idKey", idKey);
-		tagValue = PropertiesConstants.getRaw(props, "tagValue", tagValue);
-		
+		tag = PropertiesConstants.getRaw(p, "tag", "$mg-aggregate");
 		if("".equals(doc)){
 			
 			
@@ -125,6 +123,6 @@ public class MgAggregate extends MgTableOperation{
 			}	
 			list.add(map);
 		}
-		current.put(tagValue,list);
+		current.put(tag,list);
 	}
 }

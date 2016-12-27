@@ -34,7 +34,6 @@ public class MgQuery extends MgTableOperation{
 	
 	private Properties filterProperties;
 	
-	protected String tagValue="";
 	protected String first="";//first为true时，只返回最先匹配到的一个文档；其他情况返回多个文档
 	protected String sort = "";//对指定字段进行排序，可以有多个字段,用逗号隔开，升序字段放到分号前面，降序字段放分号后面.mongodb是先排序后limit
 	protected String offset="";//跳过指定数量的文档
@@ -51,7 +50,7 @@ public class MgQuery extends MgTableOperation{
 	@Override
 	public void configure(Properties p) {
 		super.configure(p);
-		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
+		tag = PropertiesConstants.getRaw(p, "tag", "$mg-query");
 		first = PropertiesConstants.getRaw(p, "first", "");
 		sort = PropertiesConstants.getRaw(p, "sort", "");
 		offset = PropertiesConstants.getRaw(p, "offset", "");
@@ -101,7 +100,7 @@ public class MgQuery extends MgTableOperation{
 						map.put(s,doc.get(s));
 					}
 				}	
-				current.put(tagValue,map);
+				current.put(tag,map);
 				
             } else {//返回多个匹配的文档
             	FindIterable<Document> iter = null;
@@ -155,7 +154,7 @@ public class MgQuery extends MgTableOperation{
     				}	
     				list.add(map);
     			}
-    			current.put(tagValue,list);
+    			current.put(tag,list);
             }
 	}
 	

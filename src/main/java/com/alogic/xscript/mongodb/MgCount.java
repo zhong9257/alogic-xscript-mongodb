@@ -25,8 +25,6 @@ public class MgCount extends MgTableOperation{
 	
 	private Properties filterProperties;
 	
-	protected String tagValue="";
-	
     protected FilterBuilder fb = null;
     protected Bson filter = null;
 
@@ -35,15 +33,10 @@ public class MgCount extends MgTableOperation{
 	}
 	
 	@Override
-	public void configure(Properties p) {
-		super.configure(p);
-		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
-	}
-	
-	@Override
     public void configure(Element e, Properties p) {
         Properties props = new XmlElementProperties(e, p);
         filterProperties=props;
+        tag = PropertiesConstants.getRaw(props, "tag", "$mg-count");
         
         Element filter = XmlTools.getFirstElementByPath(e, "filter");
         if (filter != null) {
@@ -67,6 +60,6 @@ public class MgCount extends MgTableOperation{
 		} else {
 			count = collection.count();
 		}
-		current.put(tagValue, count);
+		current.put(tag, count);
     }
 }

@@ -26,7 +26,6 @@ import com.mongodb.client.model.Sorts;
  */
 public class MgTextSearch extends MgTableOperation{
 	
-	protected String tagValue="";
 	protected String keywords="";//要匹配的字段，按照匹配度排序
 	protected String textscore = "";//是否返回searchterm的相关度分数
 	protected String offset="";//跳过指定个文档
@@ -39,7 +38,7 @@ public class MgTextSearch extends MgTableOperation{
 	@Override
 	public void configure(Properties p) {
 		super.configure(p);
-		tagValue = PropertiesConstants.getRaw(p, "tagValue", "");
+		tag = PropertiesConstants.getRaw(p, "tag", "$mg-textsearch");
 		keywords = PropertiesConstants.getRaw(p, "keywords", "");
 		textscore = PropertiesConstants.getRaw(p, "textscore", "");
 		offset = PropertiesConstants.getRaw(p, "offset", "");
@@ -88,6 +87,6 @@ public class MgTextSearch extends MgTableOperation{
 				}	
 				list.add(map);
 			}
-			current.put(tagValue,list);
+			current.put(tag,list);
 	}
 }
