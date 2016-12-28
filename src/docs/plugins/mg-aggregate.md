@@ -27,8 +27,8 @@ com.alogic.xscript.mongodb.MgAggregate
 | 编号 | 代码 | 参数 | 说明  | 写法 |
 | ---- | ---- | ---- | ---- | ---- |
 | 1 | $match| filter子标签 |用于过滤文档|{$match:{query}}，query参考filter格式|
-| 2 | $projection | 自定义字段 |提取、重命名、新增字段|{$project:{<field>:1或0或名称}}，1表示提取该字段，0表示排除该字段，"名称"表示修改该字段或者新增不存在的字段，默认返回_id字段|
-| 3 | group | 自定义bson |分组|{ $group:{_id:<expression>,<field1>:{<accumulator1>: <expression1>},...}，其中<expression>指定要操作的字段，可以是多个，<field1>是自定义的，<accumulator>包括 sum,avg,first,last,max,min,push,addToSet,stdDevPop,stdDevSamp|
+| 2 | $projection | 自定义字段 |提取、重命名、新增字段|{$project:{<field>:1或0或名称}}，1表示提取该字段，0表示排除该字段，"名称"表示修改该字段或者新增不存在的字段，默认返回_id字段[详细参考](https://docs.mongodb.com/manual/reference/operator/aggregation/project/)|
+| 3 | group | 自定义bson |分组|{ $group:{_id:<expression>,<field1>:{<accumulator1>: <expression1>},...}，其中<expression>指定要操作的字段，可以是多个，<field1>是自定义的，<accumulator>包括 sum,avg,first,last,max,min,push,addToSet,stdDevPop,stdDevSamp[详细参考](https://docs.mongodb.com/manual/reference/operator/aggregation/group/)|
 | 4 | sort |自定义bson|对指定字段排序|{$sort:{<field1>:1或-1,<field2>:1或-1,<field3>:1或-1...}},1表示正排序，-1表示逆排序|
 | 5 | limit | 自定义 |返回文档的数量|{$limit:整数值}|
 | 6 | skip | 自定义 |跳过文档的数量|{$skip:整数值}|
