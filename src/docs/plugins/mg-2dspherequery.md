@@ -9,7 +9,7 @@ mg-2dspherequery：地理查询，用于二位地理空间位置的查询。
 
 ### 实现类
 
-com.alogic.xscript.mongodb.MMg2dsphereQuery
+com.alogic.xscript.mongodb.Mg2dsphereQuery
 
 ### 配置参数
 
@@ -26,7 +26,18 @@ com.alogic.xscript.mongodb.MMg2dsphereQuery
 ### 案例
 实验在数据库test，集合sphere上进行测试，测试数据如下：
 
-![image](mg-2dsphere.png)
+| _id | loc | name | category |
+| ---- | ---- | ---- | ---- |
+| ObjectId("5858e5ae0546ca21ecfda58c") | "type":"Point","coordinates":[-73.97,40.77] | Central Park | Parks | 
+| ObjectId("5858e5e00546ca21ecfda58d") | "type":"Point","coordinates":[-73.88,40.78] | La Guardia Airport | Airport |
+| ObjectId("5858e64c0546ca21ecfda58e") | "type":"Point","coordinates":[0,0] | Center | Buildings |
+| ObjectId("5858e67b0546ca21ecfda58f") | "type":"Point","coordinates":[11.0,11.0] | baiyun | Airport |
+| ObjectId("5858e6930546ca21ecfda590") | "type":"Point","coordinates":[-11.0,-10.0] | tianhe | Airport |
+| ObjectId("5858e6be0546ca21ecfda591") | "type":"Point","coordinates":[5.0,5.0] | kawu | Airport |
+| ObjectId("5858e6d20546ca21ecfda592") | "type":"Point","coordinates":[-5.0,5.0] | sky | Airport |
+| ObjectId("5858e6d20546ca21ecfda593") | "type":"Point","coordinates":[10.0,5.0] | bird | Airport |
+| ObjectId("5858e6d20546ca21ecfda594") | "type":"Point","coordinates":[3.0,-5.0] | tree | Airport |
+| ObjectId("5858e6d20546ca21ecfda595") | "type":"Point","coordinates":[20.0,15.0] | flower | Airport |
 
 > 地理查询条件：使用圆形范围查找，圆心为(0.0, 0.0),范围半径为5(0=<r<5)
 

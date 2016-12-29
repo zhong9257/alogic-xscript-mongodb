@@ -24,7 +24,15 @@ com.alogic.xscript.mongodb.MgCount
 
 实验在数据库test，集合stores上进行测试，测试数据如下：
 
-![image](mg-query.png)
+| _id | name | description |
+| ---- | ---- | ---- |
+| 1.0 | Java Hut | Coffee and cakes |
+| 2.0 | Burger Buns | Gourmet hamburgers |
+| 3.0 | Coffee Shop | Just coffee |
+| 4.0 | Clothes Clothes Clothes | Discount clothing |
+| 5.0 | Java Shopping | Indonesian goods |
+| 6 | Burger Buns |  |
+| 8 | Burger Buns |  |
 
 > 过滤条件：统计"name"="Burger Buns"的文档数量
 

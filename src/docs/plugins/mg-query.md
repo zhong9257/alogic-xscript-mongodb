@@ -28,7 +28,15 @@ com.alogic.xscript.mongodb.MgQuery
 ### 案例
 实验在数据库test，集合stores上进行测试，测试数据如下：
 
-![image](mg-query.png)
+| _id | name | description |
+| ---- | ---- | ---- |
+| 1.0 | Java Hut | Coffee and cakes |
+| 2.0 | Burger Buns | Gourmet hamburgers |
+| 3.0 | Coffee Shop | Just coffee |
+| 4.0 | Clothes Clothes Clothes | Discount clothing |
+| 5.0 | Java Shopping | Indonesian goods |
+| 6 | Burger Buns |  |
+| 8 | Burger Buns |  |
 
 > 查询条件：查询全部文档，对name和_id字段进行逆排序，返回文档数量为2，跳过文档数量为1，只返回name字段
 

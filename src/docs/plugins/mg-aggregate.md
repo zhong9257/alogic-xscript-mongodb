@@ -37,7 +37,15 @@ com.alogic.xscript.mongodb.MgAggregate
 
 实验在数据库test，集合stores上进行测试，测试数据如下：
 
-![image](mg-query.png)
+| _id | name | description |
+| ---- | ---- | ---- |
+| 1.0 | Java Hut | Coffee and cakes |
+| 2.0 | Burger Buns | Gourmet hamburgers |
+| 3.0 | Coffee Shop | Just coffee |
+| 4.0 | Clothes Clothes Clothes | Discount clothing |
+| 5.0 | Java Shopping | Indonesian goods |
+| 6 | Burger Buns |  |
+| 8 | Burger Buns |  |
 
 > 聚合条件：统计字段为name，计算每个name值出现的次数
 
