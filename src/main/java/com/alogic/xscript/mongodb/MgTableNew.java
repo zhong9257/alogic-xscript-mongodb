@@ -34,7 +34,7 @@ public class MgTableNew extends MgDbOperation {
 		boolean tableIsExist = false;//判断表是否存在
 		for (String name : dataBase.listCollectionNames()) {
 			if(name.equals(table)){
-				log(String.format("The table(" + table + ")already exist."));
+				log(String.format("The table %s already exist.",table));
 				tableIsExist = true;
 				break;
 			}
@@ -50,5 +50,6 @@ public class MgTableNew extends MgDbOperation {
 			
 		}
 	}
+	
 
 }

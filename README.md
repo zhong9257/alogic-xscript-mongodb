@@ -80,7 +80,7 @@ alogic-xscript-mogodb是基于xscript2.0的mongodb插件，提供了使用mongod
 
 ### Example
 
-下面的案例是对MongoDB 数据库mydb的文档zytest的操作.
+下面的案例是对MongoDB 数据库demo的demotest集合的操作.
 
 ```xml
 

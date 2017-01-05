@@ -1,7 +1,9 @@
 mg-insert.md
 =======
 
-mg-insert.将一个或多个document添加到集合当中，返回被添加到集合中的文档(包括自动生成的ObjectId)，
+mg-insert.将一个或多个document添加到集合当中，返回被添加到集合中的文档(包括自动生成的ObjectId)，  
+  
+> 本指令对应mongodb的操作指令[collection.insertOne和collection.insertMany概述](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/perform-write-operations/)和[collection.insertOne和collection.insertMany API](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/?com/mongodb/client/MongoCollection.html#insertOne-org.bson.conversions.Bson-)  
 
 ### 实现类
 
