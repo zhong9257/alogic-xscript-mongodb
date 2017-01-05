@@ -11,7 +11,7 @@ alogic-xscript-mongodb插件包括：
 - table的通用操作
 	- [插入文档mg-insert](plugins/mg-insert.md)
 	- [更新文档mg-update](plugins/mg-update.md)
-	- [更新文档mg-delete](plugins/mg-delete.md)
+	- [删除文档mg-delete](plugins/mg-delete.md)
 	- [drop文档mg-drop](plugins/mg-drop.md)	
 	- [查询文档mg-query](plugins/mg-query.md)
 	- [统计文档mg-count](plugins/mg-count.md)
