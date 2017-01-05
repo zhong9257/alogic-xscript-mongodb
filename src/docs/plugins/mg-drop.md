@@ -37,5 +37,5 @@ com.alogic.xscript.mongodb.MgDrop
 结果
 
 ```json
-	{"$mg-drop":{"deletedCount":0}}
+	{"drop1":{"drop":true,"collection":"test","database":"demo"}}
 ```

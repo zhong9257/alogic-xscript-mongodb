@@ -40,7 +40,7 @@ public class Demo {
 		//run("java:///xscript/string.xml#Demo",settings);
 		//run("java:///xscript/hash.xml#Demo",settings);
 		//run("java:///xscript/list.xml#Demo",settings);
-		run("java:///xscript/MgDrop.xml#Demo",settings);
+		run("java:///xscript/Demo.xml#Demo",settings);
 		//run("java:///xscript/set.xml#Demo",settings);
 	}
 

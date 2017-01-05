@@ -1,44 +1,47 @@
 <?xml version="1.0"?>
 <script>
-	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
-	<using xmlTag = "mg-db" module="com.alogic.xscript.mongodb.MgDB"/>
-	<using xmlTag = "mg-table" module="com.alogic.xscript.mongodb.MgTable"/>
-	
- 	<mg-cli cli="globalMongoDBClientPool">
+	<using xmlTag="mg-cli" module="com.alogic.xscript.mongodb.MgClient" />
+	<using xmlTag="mg-db" module="com.alogic.xscript.mongodb.MgDB" />
+	<using xmlTag="mg-table" module="com.alogic.xscript.mongodb.MgTable" />
+
+	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="demo">
-			<mg-table table="test" >
-				<mg-insert tag="insert-cli" many="false" doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;num&quot;: 5}">
+			<mg-table table="test">
+				<mg-insert tag="insert-cli" many="false"
+					doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;num&quot;: 5}">
 				</mg-insert>
 			</mg-table>
 		</mg-db>
 	</mg-cli>
-	
-	
+
+
 
 	<mg-db cli="globalMongoDBClientPool" db="demo">
-		<mg-table table="test" >
-			<mg-insert tag="insert-db" many="true" doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;num&quot;: 22},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;num&quot;:10}]">
+		<mg-table table="test">
+			<mg-insert tag="insert-db" many="true"
+				doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;num&quot;: 22},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;num&quot;:10}]">
 			</mg-insert>
 		</mg-table>
 	</mg-db>
 
-	
-	
-	<mg-table cli="globalMongoDBClientPool" db="demo" table="test" >
-		<mg-insert tag="insert-table" many="true" docNode="doc" docResultNode="doc">
-				<!-- 子指令里取内容 -->
+
+
+	<mg-table cli="globalMongoDBClientPool" db="demo" table="test">
+		<mg-insert tag="insert-table" many="true" docNode="doc"
+			docResultNode="doc">
+			<!-- 子指令里取内容 -->
 			<doc>
-				<set id="array" value="tom;jerry;alogic;ketty"/>
-				<array tag="doc">			
-                    <foreach in="${array}">
-                            <array-item>
-                                    <get id="a" value="${$value}"/>
-                                    <get id="num" value="22"/>
-                            </array-item>
-                    </foreach>
-            </array>
+				<set id="array" value="tom;jerry;alogic;ketty" />
+				<array tag="doc">
+					<foreach in="${array}">
+						<array-item>
+							<get id="a" value="${$value}" />
+							<get id="num" value="22" type="long"/>
+						</array-item>
+					</foreach>
+				</array>
 			</doc>
 		</mg-insert>
 	</mg-table>
-	
+
 </script>

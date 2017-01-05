@@ -17,7 +17,7 @@ alogic-xscript-mogodb是基于xscript2.0的mongodb插件，提供了使用mongod
 
 #### 增加maven依赖
 
-您可以在[中央仓库](http://mvnrepository.com/)上找到[alogic-xscript-kvalue](http://mvnrepository.com/search?q=com.github.anylogic%3Aalogic-xscript-kvalue)的发布版本。
+您可以在[中央仓库](http://mvnrepository.com/)上找到[alogic-xscript-mongodb](http://mvnrepository.com/search?q=com.github.anylogic%3Aalogic-xscript-kvalue)的发布版本。
 
 ```xml
 
@@ -84,29 +84,75 @@ alogic-xscript-mogodb是基于xscript2.0的mongodb插件，提供了使用mongod
 
 ```xml
 
-	<script>
-		<using xmlTag = "kv-row" module="com.alogic.xscript.kvalue.KVRow"/>
-		
-		<array tag="log">
-			<kv-row schema="demo" table="hash" key="test">
-				<kv-hmset values="id;alogic;name;ketty;note;it's a web server"/>
-				
-				<array-item><get id="result" value="${$kv-hmset}"/></array-item>
-				
-				<kv-hset key="address" value="192.168.1.23"/>
-				<array-item><get id="result" value="${$kv-hset}"/></array-item>
-				
-				<kv-hget key="note"/>
-				<array-item><get id="result" value="${$kv-hget}"/></array-item>
-				
-				<kv-hmget tag="mget" keys="id;name"/>
-				
-				<kv-hgetall tag="getall"/>
-			</kv-row>
-		</array>
-		
-	</script>	
+<?xml version="1.0"?>
+<script>
+	<using xmlTag="mg-cli" module="com.alogic.xscript.mongodb.MgClient" />
+	<using xmlTag="mg-db" module="com.alogic.xscript.mongodb.MgDB" />
+	<using xmlTag="mg-table" module="com.alogic.xscript.mongodb.MgTable" />
 
+
+
+
+
+	<mg-db cli="globalMongoDBClientPool" db="demo">
+
+		<mg-table cli="globalMongoDBClientPool" db="demo" table="demotest">
+			<mg-drop tag="drop1">
+			</mg-drop>
+		</mg-table>
+
+
+		<!-- create collection demotest -->
+		<mg-tablenew table="demotest"></mg-tablenew>
+
+		<mg-table cli="globalMongoDBClientPool" db="demo" table="demotest">
+			<!-- insert records to demotest -->
+			<mg-insert tag="insert1" many="false"
+				doc="{ &quot;a&quot;: &quot;aa-cli&quot;, &quot;num&quot;: 5}">
+			</mg-insert>
+			<mg-insert tag="insert2" many="true" docNode="doc"
+				docResultNode="doc">
+				<!-- 子指令里取内容 -->
+				<doc>
+					<set id="array" value="tom;jerry;alogic;ketty" />
+					<array tag="doc">
+						<foreach in="${array}">
+							<array-item>
+								<get id="a" value="${$value}" />
+								<get id="num" value="22" />
+							</array-item>
+						</foreach>
+					</array>
+				</doc>
+			</mg-insert>
+			<mg-insert tag="insert3" many="true"
+				doc="[{ &quot;a&quot;: &quot;aa-db&quot;, &quot;num&quot;: 22},{ &quot;a&quot;: &quot;ac-db&quot;, &quot;num&quot;:10}]">
+			</mg-insert>
+
+			<!-- query records -->
+			<mg-query tag="query1" first="false" limit="100" offset="1"
+				projection="a,num">
+			</mg-query>
+
+			<!-- update special records -->
+			<mg-update many="true" doc="{$inc:{num:100}}">
+				<filter module="And">
+					<filter module="Eq" field="a" value="aa-cli"></filter>
+					<filter module="Eq" field="num" value="305" type="integer"></filter>
+				</filter>
+			</mg-update>
+
+			<!-- query records -->
+			<mg-query tag="afterUpdate" first="false" limit="2" offset="0"
+				projection="a,num">
+				<filter module="Eq" field="a" value="ketty"></filter>
+			</mg-query>
+		</mg-table>
+
+
+	</mg-db>
+
+</script>
 ```
 
 为了运行上面的指令，你必须要做下列工作：
@@ -122,7 +168,7 @@ alogic-xscript-mogodb是基于xscript2.0的mongodb插件，提供了使用mongod
 
 ```
 
-* 指定一个kvalue配置文件，参考[kvalue.xml](src/test/resources/conf/kvalue.xml);
+* 指定一个mongo-pool配置文件，参考[mongo-pool.xml](src/test/resources/conf/mongo-pool.xml);
 ```xml
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -139,7 +185,7 @@ alogic-xscript-mogodb是基于xscript2.0的mongodb插件，提供了使用mongod
 </naming>
 
 ```
-在上面的配置文件中，创建一个名为demo的schema，并在其中创建了4张表(zset,hash,str,list),分别用于测试SortedSet,Hash,String,List等4种常见的redis数据类型。
+在上面的配置文件中，创建一个名为globalMongoDBClientPool的连接池，并在设置了服务器地址${mongod.uris},设置了验证信息。
 
 做好上面的工作之后，可以运行[demo](src/test/java/Demo.java)来测试xscript脚本。
 
