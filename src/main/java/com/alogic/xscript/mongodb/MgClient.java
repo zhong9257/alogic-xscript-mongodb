@@ -11,6 +11,10 @@ import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 import com.mongodb.MongoClient;
 
+/**
+ * @author zhongyi
+ *
+ */
 public class MgClient extends MgNS{
 	
 	/**

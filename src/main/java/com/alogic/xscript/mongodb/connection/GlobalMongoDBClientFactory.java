@@ -26,6 +26,10 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDriverInformation;
 
 
+/**MongoDBClient工厂，单例模式生产MongoDBClient
+ * @author zhongyi
+ *
+ */
 public class GlobalMongoDBClientFactory extends Singleton{
 	
 	/**

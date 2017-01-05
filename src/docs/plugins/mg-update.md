@@ -3,7 +3,7 @@ mg-update.md
 
 mg-update.根据子标签<filter/>组合出的更新条件更新集合中的一个或多个document，更新结果返回到当前文档tag的值指定的节点.  
 
-> 本指令对应mongodb的操作指令[collection.updateOne和collection.updateMany概述](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/perform-write-operations/)和[collection.updateOne和collection.updateMany API](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/?com/mongodb/client/MongoCollection.html#updateOne-org.bson.conversions.Bson-)  
+> 本指令对应mongodb的操作指令[collection.updateOne和collection.updateMany概述](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/perform-write-operations/) 以及 [collection.updateOne和collection.updateMany API](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/?com/mongodb/client/MongoCollection.html#updateOne-org.bson.conversions.Bson-)  
 
 ### 实现类
 

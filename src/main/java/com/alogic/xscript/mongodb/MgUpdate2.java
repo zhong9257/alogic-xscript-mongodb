@@ -24,11 +24,7 @@ import com.jayway.jsonpath.spi.JsonProviderFactory;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.UpdateResult;
 
-/**根据filter更新集合里一个或者多个文档
- * @author zhongyi
- *
- */
-public class MgUpdate extends MgTableOperation {
+public class MgUpdate2 extends MgTableOperation {
 
 	protected String doc = "";
 	protected String many = "false";
@@ -55,7 +51,7 @@ public class MgUpdate extends MgTableOperation {
 		provider = JsonProviderFactory.createProvider();
 	}
 
-	public MgUpdate(String tag, Logiclet p) {
+	public MgUpdate2(String tag, Logiclet p) {
 		super(tag, p);
 	}
 

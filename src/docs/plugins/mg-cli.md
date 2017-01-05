@@ -3,7 +3,9 @@ mg-cli
 
 mg-cli用于定位到一个Mongod或者是集群Mongos的连接client，并定义一个namespace。
 
-mg-cli并不是必须的，可以采用[mg-db](mg-db.md)或[mg-table](mg-table)替代。
+mg-cli并不是必须的，可以采用[mg-db](mg-db.md)或[mg-table](mg-table)替代。  
+
+> 本指令对应mongodb的操作指令[MongoClient](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/connect-to-mongodb/)  
 
 ### 实现类
 

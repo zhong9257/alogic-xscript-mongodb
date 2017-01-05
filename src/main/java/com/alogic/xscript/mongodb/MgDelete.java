@@ -18,6 +18,10 @@ import com.anysoft.util.XmlTools;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 
+/**从指定集合里删除一个或者多个文档
+ * @author zhongyi
+ *
+ */
 public class MgDelete extends MgTableOperation{
     /**
      * Filter Builder

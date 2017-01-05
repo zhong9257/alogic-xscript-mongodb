@@ -30,7 +30,7 @@ import com.mongodb.operation.GroupOperation;
 
 
 
-/**
+/**插入一个或者多个文档到指定集合
  * @author zhongyi
  *
  */
@@ -140,14 +140,6 @@ public class MgInsert extends MgTableOperation{
 		
 		log(String.format("insert doc[%s] success!", collection.getNamespace()), "info");
 		
-	}
-	
-	public static void main(String[] args) {
-		
-		//Object blank=Document.parse("");报错
-		//Object n=Document.parse(null);报错
-		Object noData=BsonArray.parse("[{\"a\":\"aa\"},{\"b\":\"bb\"}]");
-		System.out.println("111222");
 	}
 
 }

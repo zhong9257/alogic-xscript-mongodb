@@ -7,6 +7,8 @@ mg-db可以定义在一个[mg-cli](mg-cli.md)环境下；如果没有定义在[m
 
 mg-db并不是必须的，可以采用[mg-cli](mg-cli.md)或[mg-table](mg-table.md)替代。
 
+> 本指令对应mongodb的操作指令[MongoDatabase](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/databases-collections/)  
+
 ### 实现类
 
 com.alogic.xscript.mongodb.MgDB

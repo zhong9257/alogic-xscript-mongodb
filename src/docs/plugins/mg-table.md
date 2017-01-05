@@ -5,7 +5,10 @@ mg-table用于定位到一个mongodb的collection，并定义一个namespace。
 
 mg-table可以定义在一个[mg-db](mg-db.md)环境下；如果没有定义在[mg-db](mg-db.md)环境下，那么就需要配置cli参数、db参数、table参数，mg-table会自动根据该参数使用一个集合。
 
-mg-table并不是必须的，可以采用[mg-cli](mg-cli.md)或[mg-db](mg-db.md)替代。
+mg-table并不是必须的，可以采用[mg-cli](mg-cli.md)或[mg-db](mg-db.md)替代。  
+
+> 本指令对应mongodb的操作指令[MongoCollection](http://mongodb.github.io/mongo-java-driver/3.4/driver/tutorials/databases-collections/)  
+
 
 ### 实现类
 
