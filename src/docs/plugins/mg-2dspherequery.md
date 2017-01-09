@@ -19,7 +19,7 @@ com.alogic.xscript.mongodb.Mg2dsphereQuery
 | ---- | ---- | ---- | ---- |
 | 1 | db | 自定义 |连接的数据库名，位于mg-db标签|
 | 2 | table | 自定义 |操作的集合名，位于mg-table标签|
-| 3 | tagValue | 自定义 |返回的标志| 
+| 3 | tag | 自定义 |返回的标志，默认返回"$mg-2dspherequery"| 
 | 4 | mode | inPolygon,inBox,inCircle,near |地理查询的方式，即多边形、长方形、圆形区域内部是否有文档对象存在，near查询指定地点附近范围内是否有对象存在.[详细参考](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/com/mongodb/client/model/Filters.html#geoWithin-java.lang.String-org.bson.conversions.Bson-)|
 | 5 | field | 区域参数，自定义 |格式：第一个参数是要查询的键；之后的参数是数值（多边形是一对对坐标的x,y值；长方形是左下角到右上角的x,y值；圆形是圆形坐标x,y值和半径；near参数是指定地点的x,y值，距离指定地点的最大值max和最小值min）.[详细参考](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/com/mongodb/client/model/Filters.html#geoWithin-java.lang.String-org.bson.conversions.Bson-)|
 

@@ -11,12 +11,12 @@ com.alogic.xscript.mongodb.util.filter.*
 
 ### 操作集
 
-支持一下操作：
+支持以下操作：[详细参考](http://mongodb.github.io/mongo-java-driver/3.4/javadoc/?com/mongodb/client/model/Filters.html)：
 
 | 编号 | 指令 | 说明 | 
 | ---- | ---- | ---- | 
 | 1 | And | 逻辑与  |
-| 2 | Eq | 等于操作  |
+| 2 | Eq | 等于  |
 | 3 | Exists | 是否存在给定字段  |
 | 4 | Gt | 大于  |
 | 5 | Gte | 大于或等于  |
@@ -41,7 +41,8 @@ com.alogic.xscript.mongodb.util.filter.*
 ```
 
 #### 示例：
-对要查询的文档进行过滤，返回"name"="Burger Buns"的文档
+
+> 过滤条件：对要查询的文档进行过滤，返回"name"="Burger Buns"的文档
 
 ```
 

@@ -17,7 +17,7 @@ com.alogic.xscript.mongodb.MgAggregate
 | ---- | ---- | ---- | ---- |
 | 1 | db | 自定义 |连接的数据库名，位于mg-db标签|
 | 2 | table | 自定义 |操作的集合名，位于mg-table标签|
-| 3 | tagValue | 自定义 |返回的标志|
+| 3 | tag | 自定义 |返回的标志，默认返回"$mg-aggregate"|
 | 4 | doc | bson形式的文档 |聚合框架，按一定规定的key-value组合|
 
 #### doc写法规范

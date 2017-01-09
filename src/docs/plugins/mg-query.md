@@ -17,13 +17,13 @@ com.alogic.xscript.mongodb.MgQuery
 | ---- | ---- | ---- | ---- |
 | 1 | db | 自定义 |连接的数据库名，位于mg-db标签|
 | 2 | table | 自定义 |操作的集合名，位于mg-table标签|
-| 3 | tagValue | 自定义 |返回的标志|
+| 3 | tag | 自定义 |返回的标志，默认返回"$mg-query"|
 | 4 | first | true,false |是否只返回一个文档|
-| 5 | sort | 自定义 |对返回的文档进行排序，用分号";"将正排序的字段和倒排序的字段隔开，分号必须存在，多个字段间用逗号","隔开。若只进行正排序，分号前面不写，但分号必须有|
+| 5 | sort | 自定义 |不同字段用逗号"，"隔开，字段后面用"ASC"或者"DESC"标注升序还是倒序，例如"a,b ASC,c DESC,e ASC"|
 | 6 | limit | 整数 |指定返回文档的数量|
 | 7 | offset | 整数 |跳过文档的数量|
 | 8 | projection | 自定义 |多个字段用逗号","隔开|
-| 9 | filter | 子标签 |用于对集合中的文档进行过滤|
+| 9 | filter | 子标签 |用于对集合中的文档进行过滤，详细参考filter.md|
 
 ### 案例
 实验在数据库test，集合stores上进行测试，测试数据如下：
@@ -65,7 +65,7 @@ com.alogic.xscript.mongodb.MgQuery
 	<mg-cli cli="globalMongoDBClientPool">
 		<mg-db db="test">
 			<mg-table table="stores" >
-				<mg-query tag="data" first="false" sort=";name,_id" limit="2" offset="1"
+				<mg-query tag="data" first="false" sort="name,_id DESC" limit="2" offset="1"
 				 projection="name">
 					<filter module="Eq" field="name" value="Burger Buns"></filter>
 				</mg-query>

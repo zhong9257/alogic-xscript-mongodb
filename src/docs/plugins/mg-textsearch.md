@@ -17,9 +17,9 @@ com.alogic.xscript.mongodb.MgTextSearch
 | ---- | ---- | ---- | ---- |
 | 1 | db | 自定义 |连接的数据库名，位于mg-db标签|
 | 2 | table | 自定义 |操作的集合名，位于mg-table标签|
-| 3 | tagValue | 自定义 |返回的标志|
+| 3 | tag | 自定义 |返回的标志，默认返回"$mg-textsearch"|
 | 4 | keywords | 自定义 |搜索的关键字|
-| 5 | textscore | true,false |收否返回计算的相关度|
+| 5 | textscore | true,false |是否返回相关度分数|
 | 6 | limit | 整数 |指定返回文档的数量|
 | 7 | offset | 整数 |跳过文档的数量|
 

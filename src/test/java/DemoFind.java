@@ -35,20 +35,17 @@ public class DemoFind {
 		Settings settings = Settings.get();		
 		settings.addSettings(new CommandLine(args));		
 		settings.addSettings("java:///conf/settings.xml#DemoFind", null, Settings.getResourceFactory());
-		
-		//run("java:///xscript/Helloworld.xml#Demo",settings);
-		//run("java:///xscript/string.xml#Demo",settings);
-		//run("java:///xscript/hash.xml#Demo",settings);
-		//run("java:///xscript/list.xml#Demo",settings);
+
 		//run("java:///xscript/MongoDelete.xml#Demo",settings);
-		//run("java:///xscript/set.xml#Demo",settings);
-		run("java:///xscript/MgQuery.xml#DemoFind",settings);
+		//run("java:///xscript/MgQuery.xml#DemoFind",settings);
 		//run("java:///xscript/MgTextSearch.xml#DemoFind",settings);
 		//run("java:///xscript/MgInsert.xml#DemoFind",settings);
 		//run("java:///xscript/MgCount.xml#DemoFind",settings);
 		//run("java:///xscript/Mg2dsphereQuery.xml#DemoFind",settings);
 		//run("java:///xscript/MgTableNew.xml#DemoFind",settings);
 		//run("java:///xscript/MgAggregate.xml#DemoFind",settings);
+		//run("java:///xscript/MgQueryOneAndDelete.xml#DemoFind",settings);
+		run("java:///xscript/MgReplaceOne.xml#DemoFind",settings);
 	}
 
 }

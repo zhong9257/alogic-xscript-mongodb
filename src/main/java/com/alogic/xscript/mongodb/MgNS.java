@@ -21,6 +21,8 @@ public class MgNS extends Segment {
 		registerModule("mg-count",MgCount.class);
 		registerModule("mg-2dspherequery",Mg2dsphereQuery.class);
 		registerModule("mg-aggregate",MgAggregate.class);
+		registerModule("mg-queryoneanddelete",MgQueryOneAndDelete.class);
+		registerModule("mg-replaceone",MgReplaceOne.class);
 	}
 
 }

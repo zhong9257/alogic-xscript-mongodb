@@ -17,8 +17,8 @@ com.alogic.xscript.mongodb.MgCount
 | ---- | ---- | ---- | ---- |
 | 1 | db | 自定义 |连接的数据库名，位于mg-db标签|
 | 2 | table | 自定义 |操作的集合名，位于mg-table标签|
-| 3 | tagValue | 自定义 |返回的标志|
-| 4 | filter | 子标签 |用于对集合中的文档进行过滤|
+| 3 | tag | 自定义 |返回的标志，默认返回"$mg-count"|
+| 4 | filter | 子标签 |用于对集合中的文档进行过滤，详细参考filter.md|
 
 ### 案例
 
