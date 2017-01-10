@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<script>
+	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
+	<mg-cli cli="globalMongoDBClientPool">
+		<mg-db db="test">
+			<mg-table table="demo">
+				<mg-queryoneandupdate projection="b" sort="a ASC,b DESC" doc="{&quot;$set&quot;:{&quot;a&quot;:1000}}">
+					<filter module="Eq" field="a" value="1.0" type="double"></filter>
+				</mg-queryoneandupdate>
+			</mg-table>
+		</mg-db>
+	</mg-cli>
+</script> 
