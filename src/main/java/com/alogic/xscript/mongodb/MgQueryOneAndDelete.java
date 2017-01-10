@@ -33,11 +33,11 @@ public class MgQueryOneAndDelete extends MgTableOperation{
 	
     protected FilterBuilder fb = null;
     protected Bson filter = null;
-    protected String projection = null;
-    protected String sort = null;
-    protected String maxTime = null;//查询超时设置,单位为秒
-    protected String collation = null;//mongodb3.4+新增功能，预留
-    protected String idKey = null;
+    protected String projection = "";
+    protected String sort = "";
+    protected String maxTime = "";//查询超时设置,单位为秒
+    protected String collation = "";//mongodb3.4+新增功能，预留
+    protected String idKey = "";
 
 	public MgQueryOneAndDelete(String tag, Logiclet p) {
 		super(tag, p);

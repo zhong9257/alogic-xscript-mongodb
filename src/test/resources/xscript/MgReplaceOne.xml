@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <script>
 	<using xmlTag = "mg-table" module="com.alogic.xscript.mongodb.MgTable"/>
-		
+
 	<mg-table cli="globalMongoDBClientPool" db="test" table="demo" >
-		<mg-replaceone upsert="true" doc="{&quot;replace&quot;:&quot;110&quot;}">		
+		<mg-replaceone upsert="true" doc="{&quot;replace&quot;:&quot;1101111&quot;}">		
 			<filter module="And">
-				<filter module="Eq" field="a" value="2.0" type="double"></filter>
-				<filter module="Eq" field="b" value="2.0" type="double"></filter>
+				<filter module="Eq" field="a" value="1.0" type="double"></filter>
+				<filter module="Eq" field="b" value="1.0" type="double"></filter>
 			</filter>
 		</mg-replaceone>
 	</mg-table>

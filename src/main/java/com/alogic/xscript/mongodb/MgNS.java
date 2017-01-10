@@ -23,6 +23,8 @@ public class MgNS extends Segment {
 		registerModule("mg-aggregate",MgAggregate.class);
 		registerModule("mg-queryoneanddelete",MgQueryOneAndDelete.class);
 		registerModule("mg-replaceone",MgReplaceOne.class);
+		registerModule("mg-queryoneandupdate",MgQueryOneAndUpdate.class);
+		registerModule("mg-queryoneandreplace",MgQueryOneAndReplace.class);
 	}
 
 }

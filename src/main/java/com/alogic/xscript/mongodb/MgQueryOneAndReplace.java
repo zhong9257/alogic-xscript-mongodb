@@ -1,11 +1,14 @@
 package com.alogic.xscript.mongodb;
 
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-import org.bson.BsonArray;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.w3c.dom.Element;
@@ -24,17 +27,16 @@ import com.anysoft.util.XmlTools;
 import com.jayway.jsonpath.spi.JsonProvider;
 import com.jayway.jsonpath.spi.JsonProviderFactory;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.FindOneAndReplaceOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Sorts;
-import com.mongodb.client.model.UpdateOptions;
-import com.mongodb.client.result.UpdateResult;
 
 /**
- * 替换文档 version 1.0
+ * 查询替换 version 1.0
  * @author cenwan
  *
  */
-public class MgReplaceOne extends MgTableOperation{
+public class MgQueryOneAndReplace extends MgTableOperation{
 	
 	private Properties filterProperties;
 	
@@ -44,10 +46,14 @@ public class MgReplaceOne extends MgTableOperation{
     protected String doc="";
 	protected String docNode="doc";
 	protected String docResultNode="doc";
+    protected String projection = "";
+    protected String sort = "";
+    protected String returnDocument = "";//返回替换前的文档还是替换后的文档，BEFORE或AFTER
     protected String upsert = "";//是否在没有匹配到文档的时候插入doc
+    protected String maxTime = "";//查询超时设置,单位为秒
     protected String bypassDocumentValidation = "";//是否启用文档验证
     protected String collation = "";
-    	
+   
 	/**
 	 * 更新内容来源的子节点
 	 */
@@ -58,18 +64,22 @@ public class MgReplaceOne extends MgTableOperation{
 		provider = JsonProviderFactory.createProvider();
 	}
 
-	public MgReplaceOne(String tag, Logiclet p) {
+	public MgQueryOneAndReplace(String tag, Logiclet p) {
 		super(tag, p);
 	}
 	@Override
     public void configure(Element element, Properties props) {
 		XmlElementProperties p = new XmlElementProperties(element, props);
 		filterProperties = props;
-        tag = PropertiesConstants.getRaw(p, "tag", "$mg-replaceone");
+        tag = PropertiesConstants.getRaw(p, "tag", "$mg-queryoneandreplace");
         idKey = PropertiesConstants.getRaw(p, "idKey", "");
         doc = PropertiesConstants.getRaw(p, "doc", "");
 		docNode = PropertiesConstants.getRaw(p, "docNode", docNode);
 		docResultNode = PropertiesConstants.getRaw(p, "docResultNode", docResultNode);
+        projection = PropertiesConstants.getRaw(p, "projection", "");
+        sort = PropertiesConstants.getRaw(p, "sort", "");
+        returnDocument = PropertiesConstants.getRaw(p, "returnDocument", "BEFORE");
+        maxTime = PropertiesConstants.getRaw(p, "maxTime", "");
 		upsert = PropertiesConstants.getRaw(p, "upsert", "");
         bypassDocumentValidation = PropertiesConstants.getRaw(p, "bypassDocumentValidation", "");
         collation = PropertiesConstants.getRaw(p, "collation", "");
@@ -133,18 +143,55 @@ public class MgReplaceOne extends MgTableOperation{
 			filter=Document.parse("{}");
 		}
 		
-		UpdateResult result = null;
-		
-		UpdateOptions updateOptions = new UpdateOptions();
+		FindOneAndReplaceOptions options = new FindOneAndReplaceOptions();
+
+		if(sort != ""){
+    		String str = sort;
+    		if (str.indexOf(' ') == (-1)) {
+    			options.sort(Sorts.ascending(MgQuery.stringToArray(str)));
+    		} else {
+    			while(true){
+    				int index = str.indexOf(' ');
+    				if(str.substring(index + 1, index + 2).equals("D")){
+    					options.sort(Sorts.descending(MgQuery.stringToArray(str.substring(0, index))));
+    					if(index + 6 > str.length()){
+    						break;
+    					}
+    					str = str.substring(index + 6);
+    				} else if(str.substring(index + 1, index + 2).equals("A")){
+    					options.sort(Sorts.ascending(MgQuery.stringToArray(str.substring(0, index))));
+    					if(index + 5 > str.length()){
+    						break;
+    					}
+    					str = str.substring(index + 5);
+    				} else {
+    					break;
+    				}
+    			}
+    		}
+    	}
+		if(projection != ""){
+			options.projection(fields(include((projection))));
+		}
 		if (upsert != "") {
-			updateOptions.upsert(getBoolean(upsert, false));
+			options.upsert(getBoolean(upsert, false));
 		}
-
+		ReturnDocument rd = null;
+        if(returnDocument == "AFTER"){
+        	rd = ReturnDocument.AFTER;
+        } else {
+        	rd = ReturnDocument.BEFORE;
+        }
+        options.returnDocument(rd);
+        if(maxTime != ""){
+			options.maxTime(Long.parseLong(maxTime),TimeUnit.SECONDS);
+		}
 		if (bypassDocumentValidation != "") {
-			updateOptions.bypassDocumentValidation(getBoolean(bypassDocumentValidation, false));
+			options.bypassDocumentValidation(getBoolean(bypassDocumentValidation, false));
 		}
-		result = collection.replaceOne(filter, Document.parse(doc), updateOptions);
-
+		Document result = collection.findOneAndReplace(filter, Document.parse(doc), options);
+		
+        DocObjectIdConvertor.convert(result, idKey);
 		current.put(tag, result);
     }
 }
