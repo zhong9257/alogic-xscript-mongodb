@@ -25,6 +25,7 @@ public class MgNS extends Segment {
 		registerModule("mg-replaceone",MgReplaceOne.class);
 		registerModule("mg-queryoneandupdate",MgQueryOneAndUpdate.class);
 		registerModule("mg-queryoneandreplace",MgQueryOneAndReplace.class);
+		registerModule("mg-distinct",MgDistinct.class);
 	}
 
 }

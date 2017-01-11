@@ -19,3 +19,7 @@ alogic-xscript-mongodb插件包括：
 	- [文本搜索mg-textsearch](plugins/mg-textsearch.md)
 	- [地理查询mg-2dspherequery](plugins/mg-2dspherequery.md)
 	- [文档过滤器filter](plugins/filter.md)
+	- [替换文档mg-replaceone](plugins/mg-replaceone.md)
+	- [查询删除mg-queryoneanddelete](plugins/mg-queryoneanddelete.md)
+	- [查询替换mg-queryoneandreplace](plugins/mg-queryoneandreplace.md)
+	- [查询更新mg-queryoneandupdate](plugins/mg-queryoneandupdate.md)

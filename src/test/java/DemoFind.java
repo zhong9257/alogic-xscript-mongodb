@@ -45,9 +45,10 @@ public class DemoFind {
 		//run("java:///xscript/MgTableNew.xml#DemoFind",settings);
 		//run("java:///xscript/MgAggregate.xml#DemoFind",settings);
 		//run("java:///xscript/MgQueryOneAndDelete.xml#DemoFind",settings);
-		//run("java:///xscript/MgReplaceOne.xml#DemoFind",settings);
+		run("java:///xscript/MgReplaceOne.xml#DemoFind",settings);
 		//run("java:///xscript/MgQueryOneAndReplace.xml#DemoFind",settings);
-		run("java:///xscript/MgQueryOneAndUpdate.xml#DemoFind",settings);
+		//run("java:///xscript/MgQueryOneAndUpdate.xml#DemoFind",settings);
+		//run("java:///xscript/MgDistinct.xml#DemoFind",settings);
 	}
 
 }
