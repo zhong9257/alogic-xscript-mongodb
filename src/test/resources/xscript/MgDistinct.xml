@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<script>
+	<using xmlTag = "mg-cli" module="com.alogic.xscript.mongodb.MgClient"/>
+	<mg-cli cli="globalMongoDBClientPool">
+		<mg-db db="test">
+			<mg-table table="demo" >
+				<mg-distinct fieldName="b">
+					<filter module="Eq" field="a" value="1.0" type="double"></filter>
+				</mg-distinct>
+			</mg-table>
+		</mg-db>
+	</mg-cli>
+</script> 
