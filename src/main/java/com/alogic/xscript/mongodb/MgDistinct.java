@@ -14,6 +14,7 @@ import com.alogic.xscript.LogicletContext;
 import com.alogic.xscript.mongodb.util.FilterBuilder;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
+import com.anysoft.util.Settings;
 import com.anysoft.util.XmlElementProperties;
 import com.anysoft.util.XmlTools;
 import com.mongodb.client.DistinctIterable;
@@ -34,6 +35,7 @@ public class MgDistinct extends MgTableOperation{
     
     protected String idKey = "";
     protected String fieldName = "";
+    protected String dataType = "";//查询数据的类型，可能是Double,String,Integer等
     
 	public MgDistinct(String tag, Logiclet p) {
 		super(tag, p);
@@ -47,6 +49,7 @@ public class MgDistinct extends MgTableOperation{
         tag = PropertiesConstants.getRaw(p, "tag", "$mg-count");
         idKey = PropertiesConstants.getRaw(p, "idKey", "");
         fieldName = PropertiesConstants.getRaw(p, "fieldName", "");
+        dataType = PropertiesConstants.getRaw(p, "dataType", "");
         
         Element filter = XmlTools.getFirstElementByPath(element, "filter");
         if (filter != null) {
@@ -69,7 +72,15 @@ public class MgDistinct extends MgTableOperation{
 		}else{
 			filter=Document.parse("{}");
 		}
-		DistinctIterable<Object> iter = collection.distinct(fieldName, filter, Object.class);
+		Settings settings = Settings.get();
+		Class specialClass = null;
+		String classType = "java.lang." + dataType;
+		try {
+			specialClass = settings.getClassLoader().loadClass(classType);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		DistinctIterable iter = collection.distinct(fieldName, filter, specialClass);
 		MongoCursor<Object> cursor = iter.iterator();
 		List<Object> list = new LinkedList<>();
 		while(cursor.hasNext()){
